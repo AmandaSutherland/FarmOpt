@@ -28,9 +28,11 @@ def collectingData():
 			for week in range(int(numWeeks)):
 				print 'How much of', crops[crop], 'would you like to plant in week', str(week+1), '?'
 				weeks[crop].append(raw_input())
+
 		print 'Here is all the data we received!'
 		for crop in range(int(numCrops)):
 			print crops[crop], ':', str(weeks[crop])
+		#print weeks
 			
 
 
