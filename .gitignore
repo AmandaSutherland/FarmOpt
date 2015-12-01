@@ -58,4 +58,13 @@ target/
 
 # Virtual Environment things
 venv/bin/activate.csh 
+venv/bin/easy_install-2.7
+venv/bin/easy_install
+venv/bin/wheel
+venv/bin/pip2.7
+venv/bin/pip
+venv/bin/pip2
+venv/local/lib
+venv/local/include
+venv/local/bin
 
