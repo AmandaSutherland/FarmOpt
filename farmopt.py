@@ -110,15 +110,17 @@ def display_user():
 # @login_required
 def login():
 	error = None
+	users = {}
 	app.logger.warning('Am I writing to log?')
 	if request.method == 'POST':
 		app.logger.warning(request.form['username'])
 		cur = g.db.execute('select username, password from users order by id desc')
-		users = [dict(username=row[0], password=row[1]) for row in cur.fetchall()]
-		app.logger.warning(users)
-		for user in users:
-			if request.form['username'] == user.username:
-				if request.form['password'] == user.password:
+		for row in cur.fetchall():
+			users[row[0]] = row[1]
+		print(type(users))
+		for username, password in users.iteritems():
+			if request.form['username'] == username:
+				if request.form['password'] == password:
 					session['logged_in'] = True
 					flash('You are logged in')
 					return redirect(url_for('show_entries'))
@@ -130,12 +132,14 @@ def login():
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 	error = None
+	users = {}
 	if request.method == 'POST':
 		cur = g.db.execute('select username, password from users order by id desc')
-		users = [dict(username=row[0], password=row[1]) for row in cur.fetchall()]
-		for user in users:
-			if request.form['username'] == user.username:
-				if request.form['password'] == user.password:
+		for row in cur.fetchall():
+			users[row[0]] = row[1]
+		for username, password in users.iteritems():
+			if request.form['username'] == username:
+				if request.form['password'] == password:
 					session['logged_in'] = True
 					flash('You already signed up')
 					return redirect(url_for('show_entries'))
