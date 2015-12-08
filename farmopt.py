@@ -63,6 +63,7 @@ def teardown_request(exception):
 def show_entries():
 	cur = g.db.execute('select title, text from entries order by id desc')
 	entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+	print 'Entrys', entries
 	return render_template('show_entries.html', entries=entries)
 
 @app.route('/crops')
@@ -110,47 +111,43 @@ def display_user():
 # @login_required
 def login():
 	error = None
-	users = {}
-	app.logger.warning('Am I writing to log?')
 	if request.method == 'POST':
-		app.logger.warning(request.form['username'])
+		print 'Username type:', type(request.form['username'])
 		cur = g.db.execute('select username, password from users order by id desc')
-		for row in cur.fetchall():
-			users[row[0]] = row[1]
-		print(type(users))
-		for username, password in users.iteritems():
-			if request.form['username'] == username:
-				if request.form['password'] == password:
+		users = [dict(username=row[0], password=row[1]) for row in cur.fetchall()]
+		for user in users:
+			if request.form['username'] == user['username']:
+				if request.form['password'] == user['password']:
 					session['logged_in'] = True
 					flash('You are logged in')
 					return redirect(url_for('show_entries'))
 				else:
 					error = 'Invalid password'
-		error = 'Invalid username'
+		if error == None:
+			error = 'Invalid username'
 	return render_template('login.html', error=error)
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 	error = None
-	users = {}
 	if request.method == 'POST':
 		cur = g.db.execute('select username, password from users order by id desc')
-		for row in cur.fetchall():
-			users[row[0]] = row[1]
-		for username, password in users.iteritems():
-			if request.form['username'] == username:
-				if request.form['password'] == password:
+		users = [dict(username=row[0], password=row[1]) for row in cur.fetchall()]
+		for user in users:
+			if request.form['username'] == user['username']:
+				if request.form['password'] == user['password']:
 					session['logged_in'] = True
 					flash('You already signed up')
 					return redirect(url_for('show_entries'))
 				else:
 					error = 'Unavailable username, choose a different one'
-		g.db.execute('insert into users (username, password) values (?, ?)',
-			 [request.form['username'], request.form['password']])
-		g.db.commit()
-		session['logged_in'] = True
-		flash('You are successfully signed up')
-		return redirect(url_for('show_entries'))
+		if error == None:
+			g.db.execute('insert into users (username, password) values (?, ?)',
+				 [request.form['username'], request.form['password']])
+			g.db.commit()
+			session['logged_in'] = True
+			flash('You are successfully signed up')
+			return redirect(url_for('show_entries'))
 	return render_template('signup.html', error=error)
 
 @app.route('/logout')
