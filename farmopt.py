@@ -1,21 +1,22 @@
 # all the imports
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
-     abort, render_template, flash
+     abort, render_template, flash, Response
 from contextlib import closing
-# from app_config import *
+# from flask_googlelogin import GoogleLogin
+# from flask_login import LoginManager, login_required
 
-# configuration
-# DATABASE = '/tmp/farmopt.db'
-# # DATABASE = '/path/to/database.db'
-# DEBUG = True
-# SECRET_KEY = 'development key'
-# USERNAME = 'admin'
-# PASSWORD = 'default'
+# from flask.ext.rauth import RauthOAuth2
+# from app_config import *
 
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object('app_config')
+# googlelogin = GoogleLogin()
+# googlelogin.init_app(app)
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+# googlelogin = GoogleLogin(app, login_manager)
 # FARMOPT_SETTINGS = app_config
 # app.config.from_envvar('FARMOPT_SETTINGS', silent=True)
 
@@ -26,7 +27,8 @@ def connect_db():
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = connect_to_database()
+        # db = g._database = connect_to_database()
+        db = g._database = connect_db()
     db.row_factory = sqlite3.Row
     return db
 def query_db(query, args=(), one=False):
@@ -88,7 +90,24 @@ def display_user():
 	else:
 	    print the_username, 'has the id', user['user_id']
 
+# @app.route('/oauth2callback')
+# @googlelogin.oauth2callback
+# def create_or_update_user(token, userinfo, **params):
+#     user = User.filter_by(google_id=userinfo['id']).first()
+#     if user:
+#         user.name = userinfo['name']
+#         user.avatar = userinfo['picture']
+#     else:
+#         user = User(google_id=userinfo['id'],
+#                     name=userinfo['name'],
+#                     avatar=userinfo['picture'])
+#     db.session.add(user)
+#     db.session.flush()
+#     login_user(user)
+#     return redirect(url_for('show_entries'))
+
 @app.route('/login', methods=['GET', 'POST'])
+# @login_required
 def login():
     error = None
     if request.method == 'POST':
