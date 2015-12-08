@@ -3,24 +3,13 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
 	 abort, render_template, flash, Response
 from contextlib import closing
-# from flask_googlelogin import GoogleLogin
-# from flask_login import LoginManager, login_required
-
-# from flask.ext.rauth import RauthOAuth2
-# from app_config import *
 
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object('app_config')
-# googlelogin = GoogleLogin()
-# googlelogin.init_app(app)
-# login_manager = LoginManager()
-# login_manager.init_app(app)
-# googlelogin = GoogleLogin(app, login_manager)
-# FARMOPT_SETTINGS = app_config
 # app.config.from_envvar('FARMOPT_SETTINGS', silent=True)
 
-# sqlite3 /tmp/flaskr.db < schema.sql
+# sqlite3 /home/selina/Documents/SoftDes/FarmOptDB/farmopt.db < schema.sql
 
 def connect_db():
 	return sqlite3.connect(app.config['DATABASE'])
@@ -59,12 +48,17 @@ def teardown_request(exception):
 	if db is not None:
 		db.close()
 
+# @app.route('/')
+# def show_entries():
+#     cur = g.db.execute('select title, text from entries order by id desc')
+#     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+#     return render_template('show_entries.html', entries=entries)
+
 @app.route('/')
-def show_entries():
-	cur = g.db.execute('select title, text from entries order by id desc')
-	entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-	print 'Entrys', entries
-	return render_template('show_entries.html', entries=entries)
+def crops():
+    cur = g.db.execute('select title, text from entries order by id desc')
+    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    return render_template('crop_page.html', entries=['please', 'link', 'me'], crop_dictionary={'carrots': '3', 'beans': '2'})
 
 @app.route('/crops')
 def show_crops():
@@ -74,13 +68,13 @@ def show_crops():
 
 @app.route('/add', methods=['POST'])
 def add_entry():
-	if not session.get('logged_in'):
-		abort(401)
-	g.db.execute('insert into entries (title, text) values (?, ?)',
-				 [request.form['title'], request.form['text']])
-	g.db.commit()
-	flash('New entry was successfully posted')
-	return redirect(url_for('show_entries'))
+    if not session.get('logged_in'):
+        abort(401)
+    g.db.execute('insert into entries (title, text) values (?, ?)',
+                 [request.form['title'], request.form['text']])
+    g.db.commit()
+    flash('New entry was successfully posted')
+    return redirect(url_for('crops'))
 
 @app.route('/disp_user')
 def display_user():
@@ -90,22 +84,6 @@ def display_user():
 		print 'No such user'
 	else:
 		print the_username, 'has the id', user['user_id']
-
-# @app.route('/oauth2callback')
-# @googlelogin.oauth2callback
-# def create_or_update_user(token, userinfo, **params):
-#     user = User.filter_by(google_id=userinfo['id']).first()
-#     if user:
-#         user.name = userinfo['name']
-#         user.avatar = userinfo['picture']
-#     else:
-#         user = User(google_id=userinfo['id'],
-#                     name=userinfo['name'],
-#                     avatar=userinfo['picture'])
-#     db.session.add(user)
-#     db.session.flush()
-#     login_user(user)
-#     return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 # @login_required
