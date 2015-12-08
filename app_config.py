@@ -1,6 +1,6 @@
 # configuration
 DATABASE = '/tmp/farmopt.db'
-DEBUG = True
+DEBUG = False
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
