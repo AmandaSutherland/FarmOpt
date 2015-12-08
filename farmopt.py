@@ -98,7 +98,7 @@ def login():
 				if request.form['password'] == user['password']:
 					session['logged_in'] = True
 					flash('You are logged in')
-					return redirect(url_for('show_entries'))
+					return redirect(url_for('crops'))
 				else:
 					error = 'Invalid password'
 		if error == None:
@@ -116,7 +116,7 @@ def signup():
 				if request.form['password'] == user['password']:
 					session['logged_in'] = True
 					flash('You already signed up')
-					return redirect(url_for('show_entries'))
+					return redirect(url_for('crops'))
 				else:
 					error = 'Unavailable username, choose a different one'
 		if error == None:
@@ -125,14 +125,14 @@ def signup():
 			g.db.commit()
 			session['logged_in'] = True
 			flash('You are successfully signed up')
-			return redirect(url_for('show_entries'))
+			return redirect(url_for('crops'))
 	return render_template('signup.html', error=error)
 
 @app.route('/logout')
 def logout():
 	session.pop('logged_in', None)
 	flash('You were logged out')
-	return redirect(url_for('show_entries'))
+	return redirect(url_for('crops'))
 
 if __name__ == '__main__':
 	init_db()
