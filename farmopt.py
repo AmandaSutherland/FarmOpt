@@ -57,11 +57,17 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
+# @app.route('/')
+# def show_entries():
+#     cur = g.db.execute('select title, text from entries order by id desc')
+#     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+#     return render_template('show_entries.html', entries=entries)
+
 @app.route('/')
-def show_entries():
+def crops():
     cur = g.db.execute('select title, text from entries order by id desc')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
+    return render_template('crop_page.html', entries=['blah', 'thing', 'other thing'])
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -71,7 +77,7 @@ def add_entry():
                  [request.form['title'], request.form['text']])
     g.db.commit()
     flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('crops'))
 
 @app.route('/disp_user')
 def display_user():
@@ -93,7 +99,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('show_entries'))
+            return redirect(url_for('crops'))
     return render_template('login.html', error=error)
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -107,7 +113,7 @@ def signup():
         else:
             session['logged_in'] = True
             flash('You already signed up')
-            return redirect(url_for('show_entries'))
+            return redirect(url_for('crops'))
     return render_template('signup.html', error=error)
 
 @app.route('/logout')
