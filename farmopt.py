@@ -69,7 +69,7 @@ def teardown_request(exception):
 def crops():
     cur = g.db.execute('select title, text from entries order by id desc')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return render_template('crop_page.html', entries=['blah', 'thing', 'other thing'])
+    return render_template('crop_page.html', entries=['please', 'link', 'me'], crop_dictionary={'carrots': '3', 'beans': '2'})
 
 @app.route('/add', methods=['POST'])
 def add_entry():

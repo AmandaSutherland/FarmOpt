@@ -12,6 +12,15 @@
     </dl>
   </form>
 
+  <table><h2>Table of crops and beds</h2>
+  {% for key, value in crop_dictionary.items() %}
+     <tr>
+          <th> {{ key }} </th>
+          <td> {{ value }} </td>
+     </tr>
+  {% endfor %}
+  </table>
+
   <form>
     <dl>
       <h2>Flexability for the crop</h2>
@@ -23,6 +32,15 @@
     </dl>
   </form>
 
+    <table><h2>Table of flexibilities</h2>
+  {% for key, value in crop_dictionary.items() %}
+     <tr>
+          <th> {{ key }} </th>
+          <td> {{ value }} </td>
+     </tr>
+  {% endfor %}
+  </table>
+
     <form>
     <dl>
       <h2>Tending processes for the crop</h2>
@@ -33,10 +51,14 @@
       <dd><input type=submit value=Submit>
     </dl>
   </form>
-  <ul>
-    {% for n in entries %}
-    <li>{{n}}</li>
-    {% endfor %}
-  </ul>
+
+    <table><h2>Table of crops and beds</h2>
+  {% for key, value in crop_dictionary.items() %}
+     <tr>
+          <th> {{ key }} </th>
+          <td> {{ value }} </td>
+     </tr>
+  {% endfor %}
+  </table>
 
 {% endblock %}
