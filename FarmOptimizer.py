@@ -7,7 +7,6 @@
 ##this would look like a python array of python arrays of np arrays, so that we can append an unknown number of nparrays depending on the row.
 
 import numpy as np
-from scipy.optimize import minimize
 from copy import deepcopy
 def FarmOpt(User_Schedule, Crop_Hours, Week_Flexibility, Beds_Flexibility, Available_Hours):
 	if sum(Week_Flexibility) == 0:
@@ -18,7 +17,12 @@ def FarmOpt(User_Schedule, Crop_Hours, Week_Flexibility, Beds_Flexibility, Avail
 
 def optimizer(User_Schedule, Week_Flexibility, Beds_Flexibility):
 	farm_death, Hour_Schedule = Process_User_Schedule(User_Schedule, Crop_Hours, Week_Flexibility)
-	
+	#initiate array for daughter points
+	crops = len(User_Schedule)
+	all_daughter_rows = []
+	for i in range(0, crops):
+		all_daughter_rows.append([])
+	#here's the loop that finds bad stuff and optimizes
 	better = True
 	while better:
 		#find the first thing to try to fix

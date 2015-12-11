@@ -6,7 +6,7 @@
 ##weed out the ones that don't fit the constraints(an array of arrays). Next time we touch the row, we'll already have the possibilities and don't have to calculate them again. 
 ##this would look like a python array of python arrays of np arrays, so that we can append an unknown number of nparrays depending on the row.
 
-import numpy as np
+import numpy as n
 from scipy.optimize import minimize
 from copy import deepcopy
 def FarmOpt(User_Schedule, Crop_Hours, Week_Flexibility, Beds_Flexibility, Available_Hours):
