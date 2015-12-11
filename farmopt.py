@@ -3,7 +3,6 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
 	 abort, render_template, flash, Response
 from contextlib import closing
-<<<<<<< HEAD
 import pygal
 import json
 from urllib2 import urlopen  # python 2 syntax
@@ -13,8 +12,6 @@ from pygal.style import DarkSolarizedStyle
 
 # from flask.ext.rauth import RauthOAuth2
 # from app_config import *
-=======
->>>>>>> 510eccc35d7cf222b86b2bbde9f7683937136b89
 
 # create our little application :)
 app = Flask(__name__)
