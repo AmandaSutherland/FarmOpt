@@ -3,15 +3,12 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
 	 abort, render_template, flash, Response
 from contextlib import closing
+# import gss
 import pygal
 import json
 from urllib2 import urlopen  # python 2 syntax
 from pygal.style import DarkSolarizedStyle
-# from flask_googlelogin import GoogleLogin
-# from flask_login import LoginManager, login_required
 
-# from flask.ext.rauth import RauthOAuth2
-# from app_config import *
 
 # create our little application :)
 app = Flask(__name__)
@@ -148,6 +145,10 @@ def logout():
 	session.pop('logged_in', None)
 	flash('You were logged out')
 	return redirect(url_for('crops'))
+
+def optimizion():
+	print 'I am optimizing'
+	# Do the math!
 
 if __name__ == '__main__':
 	init_db()
