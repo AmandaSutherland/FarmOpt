@@ -2,68 +2,87 @@
 
 {% block body %}
 
-    <h2>Crop Information</h2>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('crops') }}" method=post>
-    <dl>
-      <dt>Crop Name:
-      <dd><input type=text name=cropname>
-      <dt>Date starting:
-      <dd><input type="date" name="crop_date">
-      <dt>Number of Beds:
-      <dd><input type=text name=numberbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+		<h2>Crop Information</h2>
+	{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+	<form action="{{ url_for('crops') }}" method=post>
+		<dl>
+			<dt>Crop Name:
+			<dd><input type=text name=cropname>
+			<dt>Date starting:
+			<dd><input type="date" name="crop_date">
+			<dt>Number of Beds:
+			<dd><input type=text name=numberbeds>
+			<dd><input type=submit value=Submit>
+		</dl>
+	</form>
 
-  <table class="table"><h2>Table of crops and beds</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
+<table class="u-full-width">
+	<thead>
+		<tr>
+			<th>Crops</th>
+			<th>Beds</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for key, value in crop_dictionary.items() %}
+		 <tr>
+					<th> {{ key }} </th>
+					<td> {{ value }} </td>
+		 </tr>
+		{% endfor %}
+	</tbody>
+</table>
 
-  <form>
-    <dl>
-      <h2>Flexability for the crop</h2>
-      <dt>Flexability in weeks:
-      <dd><input type=text name=flexweek>
-      <dt>Flexability in beds:
-      <dd><input type=text name=flexbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+<!-- 	</tbody>
+</table>
+	<table class="table table-hover"><h2>Table of crops and beds</h2>
+	{% for key, value in crop_dictionary.items() %}
+		 <tr>
+					<th> {{ key }} </th>
+					<td> {{ value }} </td>
+		 </tr>
+	{% endfor %}
+	</table> -->
 
-    <table><h2>Table of flexibilities</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
+	<form>
+		<dl>
+			<h2>Flexability for the crop</h2>
+			<dt>Flexability in weeks:
+			<dd><input type=text name=flexweek>
+			<dt>Flexability in beds:
+			<dd><input type=text name=flexbeds>
+			<dd><input type=submit value=Submit>
+		</dl>
+	</form>
 
-    <form>
-    <dl>
-      <h2>Tending processes for the crop</h2>
-      <dt>Add processes:
-      <dd><input type=text name=flexweek>
-      <dt>Weeks for added process:
-      <dd><input type=text name=flexbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+		<table><h2>Table of flexibilities</h2>
+	{% for key, value in crop_dictionary.items() %}
+		 <tr>
+					<th> {{ key }} </th>
+					<td> {{ value }} </td>
+		 </tr>
+	{% endfor %}
+	</table>
 
-    <table>
-    <h2>Table of crops and beds</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
-   
+		<form>
+		<dl>
+			<h2>Tending processes for the crop</h2>
+			<dt>Add processes:
+			<dd><input type=text name=flexweek>
+			<dt>Weeks for added process:
+			<dd><input type=text name=flexbeds>
+			<dd><input type=submit value=Submit>
+		</dl>
+	</form>
+
+		<table>
+		<h2>Table of crops and beds</h2>
+	{% for key, value in crop_dictionary.items() %}
+		 <tr>
+					<th> {{ key }} </th>
+					<td> {{ value }} </td>
+		 </tr>
+	{% endfor %}
+	</table>
+	 
 {% endblock %}
