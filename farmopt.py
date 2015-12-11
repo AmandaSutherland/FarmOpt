@@ -3,6 +3,12 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
 	 abort, render_template, flash, Response
 from contextlib import closing
+# import gss
+import pygal
+import json
+from urllib2 import urlopen  # python 2 syntax
+from pygal.style import DarkSolarizedStyle
+
 
 # create our little application :)
 app = Flask(__name__)
@@ -60,11 +66,17 @@ def crops():
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     return render_template('crop_page.html', entries=['please', 'link', 'me'], crop_dictionary={'carrots': '3', 'beans': '2'})
 
-@app.route('/crops')
-def show_crops():
-	cur = g.db.execute('select title, text from crops order by id desc')
-	crops = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-	return render_template('show_entries.html', entries=crops)
+@app.route('/chart')
+def plot_chart(date='20140415', state='IA', city='Ames'):
+    line_chart = pygal.Line()
+    line_chart.title = 'Browser usage evolution (in %)'
+    line_chart.x_labels = map(str, range(2002, 2013))
+    line_chart.add('Firefox', [None, None,    0, 16.6,   25,   31, 36.4, 45.5, 46.3, 42.8, 37.1])
+    line_chart.add('Chrome',  [None, None, None, None, None, None,    0,  3.9, 10.8, 23.8, 35.3])
+    line_chart.add('IE',      [85.8, 84.6, 84.7, 74.5,   66, 58.6, 54.7, 44.8, 36.2, 26.6, 20.1])
+    line_chart.add('Others',  [14.2, 15.4, 15.3,  8.9,    9, 10.4,  8.9,  5.8,  6.7,  6.8,  7.5])
+    line_chart = line_chart.render()
+    return render_template('plot.html', line_chart=line_chart)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -133,6 +145,15 @@ def logout():
 	session.pop('logged_in', None)
 	flash('You were logged out')
 	return redirect(url_for('crops'))
+
+def optimizion():
+	print 'I am optimizing'
+	results = ()
+	# Do the math!
+	# Inputs: User_Schedule and Crop_Hours are nested lists, available hours is a list
+	# Output: Tuple of lists and nested list
+	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
+
 
 if __name__ == '__main__':
 	init_db()
