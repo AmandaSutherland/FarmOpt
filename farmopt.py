@@ -148,7 +148,12 @@ def logout():
 
 def optimizion():
 	print 'I am optimizing'
+	results = ()
 	# Do the math!
+	# Inputs: User_Schedule and Crop_Hours are nested lists, available hours is a list
+	# Output: Tuple of lists and nested list
+	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
+
 
 if __name__ == '__main__':
 	init_db()
