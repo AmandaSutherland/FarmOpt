@@ -17,9 +17,7 @@ def farmsum(User_Schedule, Crop_Hours, Available_Hours):
 	weekly_sum = Hour_Schedule.sum(axis =0)
 	#how many extra hours are assigned
 	farm_death = weekly_sum - Available_Hours
-	# print "hour_schedule", Hour_Schedule
-	# print "farm_death", farm_death
-	# print "weekly sum", weekly_sum
+	
 	return weekly_sum, farm_death, Hour_Schedule
 
 if __name__  == "__main__":
@@ -29,4 +27,11 @@ if __name__  == "__main__":
 	User_Schedule = np.array([[0,2,0,0,0], [1, 1, 0, 0, 0], [0, 0, 1, 0, 0]])
 	Crop_Hours = np.array([[.5, .5, .5, 0, 0], [1, 1.5, 0, 0, 0], [2, 2, 2, 0, 0]])
 	Available_Hours = np.array([2, 2, 3, 4, 2])
-	print type(farmsum(User_Schedule, Crop_Hours, Available_Hours))
+	print farmsum(User_Schedule, Crop_Hours, Available_Hours)
+	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
+	hour_schedule = results[2]
+	farm_death = results[1]
+	weekly_sum = results[0]
+	print "hour_schedule", hour_schedule
+	print "farm_death", farm_death
+	print "weekly sum", weekly_sum
