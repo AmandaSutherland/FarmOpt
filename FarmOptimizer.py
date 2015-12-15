@@ -22,6 +22,8 @@ def optimizer(User_Schedule, Week_Flexibility, Beds_Flexibility):
 	all_daughter_rows = []
 	for i in range(0, crops):
 		all_daughter_rows.append([])
+
+	
 	#here's the loop that finds bad stuff and optimizes
 	better = True
 	while better:
@@ -31,18 +33,41 @@ def optimizer(User_Schedule, Week_Flexibility, Beds_Flexibility):
 		worst_column_copy = deepcopy(worst_column)
 		found_flexible_bad = False
 		while found_flexible_bad == False:
-			worst_in_column = np.argmax(worst_column_copy)
-			#make sure its week can be moved
-			check_wk_flexibility =  Week_Flexibility[worst_in_column]
+			worst_row_in_column = np.argmax(worst_column_copy)
+			#make sure its week can be moved. If so, check if daughters have been calculated yet. If not, initiate the calculation.
+			check_wk_flexibility =  Week_Flexibility[worst_row_in_column]
 			if check_wk_flexibility > 0:
-				problem_row = User_Schedule[worst_in_column]
+				problem_row = User_Schedule[worst_row_in_column]
+				if all_daughter_rows[worst_row_in_column] == []:
+					#this section will generate daughter points for the current problem row.
+					all_daughter_rows[worst_row_in_column].append(np.array(problem_row))
+					##n = int(Week_Flexibility[worst_row_in_column])
+					n = 2
+					print "n = ", n
+					while n > 0:
+						problem_row_copy = deepcopy(problem_row)
+						index = 0
+						for entry in problem_row_copy:
+							print "entry", entry
+							if entry != 0:
+								entry -=1
+								problem_row_copy[index] = entry
+								print "problem row mod", problem_row_copy
+								index+=1
+							elif entry == 0:
+								index+=1
+						n -=1
+
+					
 				found_flexible_bad = True
 
 			elif check_wk_flexibility == 0:
 				print "that one wasn't flexible. trying again"
-				worst_column_copy[worst_in_column] = -1 
-				#will go to the next worst entry in the column of Hour_Schedule, 
-				#and check its week flexibility. It might be useful to turn check flexibility into a loop. 
+				worst_column_copy[worst_row_in_column] = -1 
+		print "all daughter rows", all_daughter_rows
+		
+		#this section will use the 
+
 
 		better = False
 		# if something:
