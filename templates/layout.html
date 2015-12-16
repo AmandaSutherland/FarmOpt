@@ -1,8 +1,13 @@
 <!doctype html>
 <title>Farm Opt</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>Farm Opt</h1>
+<!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='skeleton.css') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='normalize.css') }}">
+<div class="container">
+    <section class="header">
+      <h2 class="title">Farm Optimization</h2>
+      <p>A tool for farmers who are interested in optimizing their planting schedule to fit their labor budget</p>
+    </section>
   <div class=metanav>
 
   {% if not session.logged_in %}
