@@ -79,11 +79,20 @@ def plot_chart(date='20140415', state='IA', city='Ames'):
 def add_crop():
 	if not session.get('logged_in'):
 		abort(401)
-	g.db.execute('insert into crops (username, cropname, startdate, numbeds) values (?, ?, ?, ?)',
-				 [session['username'], request.form['cropname'], request.form['startdate'], request.form['numbeds']])
+	g.db.execute('insert into crops (cropname, username, startdate, numbeds) values (?, ?, ?, ?)',
+				 [request.form['cropname'], session['username'], request.form['startdate'], request.form['numbeds']])
 	g.db.commit()
 	flash('New crop was successfully added')
 	return redirect(url_for('crops'))
+
+@app.route('/disp_user')
+def display_user():
+	user = query_db('select * from users where username = ?',
+					[the_username], one=True)
+	if user is None:
+		print 'No such user'
+	else:
+		print the_username, 'has the id', user['user_id']
 
 @app.route('/login', methods=['GET', 'POST'])
 # @login_required

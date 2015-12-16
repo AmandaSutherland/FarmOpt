@@ -1,43 +1,51 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
-  <h2>Crops</h2>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('crops') }}" method=post>
-    <dl>
-      <dt>Crop Name:
-      <dd><input type=text name=cropname>
-      <dt>Date starting:
-      <dd><input type="date" name="crop_date">
-      <dt>Number of Beds:
-      <dd><input type=text name=numberbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
-
-  <table class="table"><h2>Table of crops and beds</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
-
-<!--   <form action="demo_form.asp">
-  First name: <input type="text" name="fname" value="John"><br>
-  Last name: <input type="text" name="lname" value="Doe"><br>
-  <input type="submit" value="Submit form">
-</form> -->
+	{% if session.logged_in %}
+	  <h2>Add Crops</h2>
+    <form action="{{ url_for('add_crop') }}" method=post class=add-crop>
+			<dl>
+	      <dt>Crop Name:
+	      <dd><input type=text name=cropname>
+	      <dt>Date starting:
+	      <dd><input type=date name=startdate>
+	      <dt>Number of Beds:
+	      <dd><input type=text name=numbeds>
+    		<dd><input type=submit value=Add>
+  		</dl>
+    </form>
+	  
+	  <h2>Table of Added Crops</h2>
+	  <table border="1" width="100%">
+	  	<tr>
+			<th>Crop Name</th>
+			<th>Starting Date</th>
+			<th>Number of beds</th>
+			</tr>
+	  	{% for crop in crops %}
+	    <tr>
+	    <td>{{ crop.cropname }}</td>
+	    <td>{{ crop.startdate|safe }}</td>
+	    <td>{{ crop.numbeds}}</td>
+	    </tr>
+	    {% else %}
+      <em>No crops added yet.</em>
+	   {% endfor %}
+	   {% endif %}
+	   <!-- {% if not session.logged_in %}
+	  	<h2>Please log in to use Farm Optimization</h2>
+	  	{% endif %} -->
+	  </table>
+	  <br>
 
   <h2>Crop Information</h2>
 
   <select>
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
+  	{% for crop in crops %}
+    <option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
+    {% else %}
+    <option value="none">None</option>
+    {% endfor %}
   </select>
 
 <!-- Leaving this for when we want to implement flexability -->
@@ -52,14 +60,6 @@
     </dl>
   </form>
 
-    <table><h2>Table of flexibilities</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table> -->
 
     <form>
     <dl>
@@ -71,15 +71,5 @@
       <dd><input type=submit value=Submit>
     </dl>
   </form>
-
-    <table>
-    <h2>Table of crops and beds</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
    
 {% endblock %}
