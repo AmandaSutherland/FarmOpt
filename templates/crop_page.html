@@ -2,6 +2,18 @@
 
 {% block body %}
 	{% if session.logged_in %}
+
+    <h2>Labor Information</h2>
+    <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
+      <dl>
+        <dt>How many weeks are you planning on working this planting season?
+        <dd><input type=integer name=weeks>
+        <dt>How many hours can you work per week?
+        <dd><input type=text name=hours>
+        <dd><input type=submit value=Submit>
+      </dl>
+    </form>
+
 		<h2>Crop Information</h2>
 		<h3>Add Crops</h3>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
@@ -12,39 +24,32 @@
 				<dd><input type=date name=startdate>
 				<dt>Number of Beds:
 				<dd><input type=text name=numbeds>
+        <dt>Total Number of weeks for crop:
+        <dd><input type=text name=numweeks>
 				<dd><input type=submit value=Add>
 			</dl>
 		</form>
 		
-		<h3>Table of Added Crops</h3>
+		<h3>Your Crops</h3>
 		<table border="1" width="100%">
 			<tr>
 			<th>Crop Name</th>
 			<th>Starting Date</th>
 			<th>Number of beds</th>
+      <th>Number of Weeks</th>
 			</tr>
 			{% for crop in crops %}
 			<tr>
 			<td>{{ crop.cropname }}</td>
 			<td>{{ crop.startdate|safe }}</td>
 			<td>{{ crop.numbeds}}</td>
+      <td>{{ crop.numweeks}}</td>
 			</tr>
 			{% else %}
 			<em>No crops added yet.</em>
 		 {% endfor %}
 		</table>
 		<br>
-
-		<h2>Labor Information</h2>
-		<form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
-			<dl>
-				<dt>How many weeks are you planning on working this planting season?
-				<dd><input type=integer name=weeks>
-				<dt>How many hours can you work per week?
-				<dd><input type=text name=hours>
-				<dd><input type=submit value=Submit>
-			</dl>
-		</form>
 
 		{# <h3>Table of Labor Info</h3>
 		<table border="1" width="100%">
@@ -64,16 +69,16 @@
 		 <br> #}
 
 		<h3>Select Crop</h3>
-	<select>
-		{% for crop in crops %}
-		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
-		{% else %}
-		<option value="none">None</option>
-		{% endfor %}
-	</select>
+  	<select>
+  		{% for crop in crops %}
+  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
+  		{% else %}
+  		<option value="none">None</option>
+  		{% endfor %}
+  	</select>
 
 <!-- Leaving this for when we want to implement flexability -->
-	<h2>Flexability for the crop</h2>  <form> 
+<!-- 	<h2>Flexability for the crop</h2>  <form> 
 		<dl>
 			<dt>Flexability of week:
 			<dd><input type=text name=flexweek>
@@ -81,7 +86,7 @@
 			<dd><input type=integer name=flexbeds>
 			<dd><input type=submit value=Submit>
 		</dl>
-	</form>
+	</form> -->
 
 		<form>
 		<dl>
@@ -90,9 +95,50 @@
 			<dd><input type=text name=process>
 			<dt>Weeks for added process:
 			<dd><input type=text name=pweeks>
+      <dt>Hours per week:
+      <dd><input type=text name=phours>
 			<dd><input type=submit value=Submit>
 		</dl>
 	</form>
+
+    <h3>Tending Processes</h3>
+    <table border="1" width="100%">
+      <tr>
+      <th>Tending Process</th>
+      <th>Week</th>
+      <th>Hours Per Week</th>
+      </tr>
+      {% for crop in crops %} 
+      <!-- This (above) needs to be changed  -->
+      <tr>
+      <td>{{ crop.process }}</td>
+      <td>{{ crop.pweeks }}</td>
+      <td>{{ crop.phours}}</td>
+      </tr>
+      {% else %}
+      <em>No crops added yet.</em>
+     {% endfor %}
+    </table>
+    <br>
+
+    <h2>Your Planting Timetable</h2>
+    <table border="1" width="100%">
+      <tr>
+      <th></th>
+      <th>Week</th>
+      <th>Hours Per Week</th>
+      </tr>
+      {% for crop in crops %}
+      <tr>
+      <td>{{ crop.process }}</td>
+      <td>{{ crop.pweeks }}</td>
+      <td>{{ crop.phours}}</td>
+      </tr>
+      {% else %}
+      <em>No crops added yet.</em>
+     {% endfor %}
+    </table>
+    <br>
 
 	{% endif %}
 	 
