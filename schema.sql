@@ -16,6 +16,6 @@ create table crops (
 drop table if exists weeks;
 create table weeks (
   id integer primary key autoincrement,
-  title text not null,
-  text text not null
+  username text not null,
+  hours text not null
 );

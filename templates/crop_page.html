@@ -2,74 +2,100 @@
 
 {% block body %}
 	{% if session.logged_in %}
-	  <h2>Add Crops</h2>
-    <form action="{{ url_for('add_crop') }}" method=post class=add-crop>
+		<h2>Crop Information</h2>
+		<h3>Add Crops</h3>
+		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
 			<dl>
-	      <dt>Crop Name:
-	      <dd><input type=text name=cropname>
-	      <dt>Date starting:
-	      <dd><input type=date name=startdate>
-	      <dt>Number of Beds:
-	      <dd><input type=text name=numbeds>
-    		<dd><input type=submit value=Add>
-  		</dl>
-    </form>
-	  
-	  <h2>Table of Added Crops</h2>
-	  <table border="1" width="100%">
-	  	<tr>
+				<dt>Crop Name:
+				<dd><input type=text name=cropname>
+				<dt>Date starting:
+				<dd><input type=date name=startdate>
+				<dt>Number of Beds:
+				<dd><input type=text name=numbeds>
+				<dd><input type=submit value=Add>
+			</dl>
+		</form>
+		
+		<h3>Table of Added Crops</h3>
+		<table border="1" width="100%">
+			<tr>
 			<th>Crop Name</th>
 			<th>Starting Date</th>
 			<th>Number of beds</th>
 			</tr>
-	  	{% for crop in crops %}
-	    <tr>
-	    <td>{{ crop.cropname }}</td>
-	    <td>{{ crop.startdate|safe }}</td>
-	    <td>{{ crop.numbeds}}</td>
-	    </tr>
-	    {% else %}
-      <em>No crops added yet.</em>
-	   {% endfor %}
-	   {% endif %}
-	   <!-- {% if not session.logged_in %}
-	  	<h2>Please log in to use Farm Optimization</h2>
-	  	{% endif %} -->
-	  </table>
-	  <br>
+			{% for crop in crops %}
+			<tr>
+			<td>{{ crop.cropname }}</td>
+			<td>{{ crop.startdate|safe }}</td>
+			<td>{{ crop.numbeds}}</td>
+			</tr>
+			{% else %}
+			<em>No crops added yet.</em>
+		 {% endfor %}
+		</table>
+		<br>
 
-  <h2>Crop Information</h2>
+		<h2>Labor Information</h2>
+		<form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
+			<dl>
+				<dt>How many weeks are you planning on working this planting season?
+				<dd><input type=integer name=weeks>
+				<dt>How many hours can you work per week?
+				<dd><input type=text name=hours>
+				<dd><input type=submit value=Submit>
+			</dl>
+		</form>
 
-  <select>
-  	{% for crop in crops %}
-    <option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
-    {% else %}
-    <option value="none">None</option>
-    {% endfor %}
-  </select>
+		{# <h3>Table of Labor Info</h3>
+		<table border="1" width="100%">
+			<tr>
+			<th>Week Number</th>
+			<th>Labor Hours per Week</th>
+			</tr>
+			{% for week in weeks %}
+			<tr>
+			<td>{{ week.id }}</td>
+			<td>{{ week.hours }}</td>
+			</tr>
+			{% else %}
+			<em>No weeks added yet.</em>
+		 {% endfor %}
+		 </table>
+		 <br> #}
+
+		<h3>Select Crop</h3>
+	<select>
+		{% for crop in crops %}
+		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
+		{% else %}
+		<option value="none">None</option>
+		{% endfor %}
+	</select>
+
+	{% endif %}
 
 <!-- Leaving this for when we want to implement flexability -->
 <!--   <form> 
-    <dl>
-      <h2>Flexability for the crop</h2>
-      <dt>Flexability in weeks:
-      <dd><input type=text name=flexweek>
-      <dt>Flexability in beds:
-      <dd><input type=text name=flexbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+		<dl>
+			<h2>Flexability for the crop</h2>
+			<dt>Flexability in weeks:
+			<dd><input type=text name=flexweek>
+			<dt>Flexability in beds:
+			<dd><input type=text name=flexbeds>
+			<dd><input type=submit value=Submit>
+		</dl>
+	</form>
 
 
-    <form>
-    <dl>
-      <h2>Tending processes for the crop</h2>
-      <dt>Add processes:
-      <dd><input type=text name=flexweek>
-      <dt>Weeks for added process:
-      <dd><input type=text name=flexbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
-   
+		<form>
+		<dl>
+			<h2>Tending processes for the crop</h2>
+			<dt>Add processes:
+			<dd><input type=text name=flexweek>
+			<dt>Weeks for added process:
+			<dd><input type=text name=flexbeds>
+			<dd><input type=submit value=Submit>
+		</dl>
+	</form>
+	 
 {% endblock %}

@@ -58,10 +58,21 @@ def teardown_request(exception):
 def crops():
 	if not session.get('logged_in'):
 		return redirect(url_for('login'))
-	cur = g.db.execute('select cropname, startdate, numbeds from crops where username = ?', [session['username']])
-	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2]) for row in cur.fetchall()]
-	return render_template('crop_page.html', crops=crops)
-		# , crop_dictionary={'carrots': '3', 'beans': '2'})
+	cur1 = g.db.execute('select cropname, startdate, numbeds from crops where username = ?', [session['username']])
+	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2]) for row in cur1.fetchall()]
+	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
+	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
+	return render_template('crop_page.html', crops=crops, weeks=weeks, numweeks=len(weeks))
+
+@app.route('/weeks')
+def weeks():
+	if not session.get('logged_in'):
+		return redirect(url_for('login'))
+	cur1 = g.db.execute('select cropname, startdate, numbeds from crops where username = ?', [session['username']])
+	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2]) for row in cur1.fetchall()]
+	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
+	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
+	return render_template('crop_page.html', crops=crops, weeks=weeks, numweeks=len(weeks))
 
 @app.route('/chart')
 def plot_chart(date='20140415', state='IA', city='Ames'):
@@ -75,7 +86,7 @@ def plot_chart(date='20140415', state='IA', city='Ames'):
 	line_chart = line_chart.render()
 	return render_template('plot.html', line_chart=line_chart)
 
-@app.route('/add', methods=['POST'])
+@app.route('/addcrop', methods=['POST'])
 def add_crop():
 	if not session.get('logged_in'):
 		abort(401)
@@ -83,6 +94,17 @@ def add_crop():
 				 [session['username'], request.form['cropname'], request.form['startdate'], request.form['numbeds']])
 	g.db.commit()
 	flash('New crop was successfully added')
+	return redirect(url_for('crops'))
+
+@app.route('/addweeks', methods=['POST'])
+def add_weeks():
+	if not session.get('logged_in'):
+		abort(401)
+	for week in range(0,int(request.form['weeks'])):
+		g.db.execute('insert into weeks (username, hours) values (?, ?)',
+					 [session['username'], request.form['hours']])
+	g.db.commit()
+	flash('Labor information was successfully registered')
 	return redirect(url_for('crops'))
 
 @app.route('/login', methods=['GET', 'POST'])
