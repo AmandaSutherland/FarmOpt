@@ -1,0 +1,11 @@
+1. crop
+2. date starting
+3. number of beds
+4. how many weeks will this take overall
+
+5. tending process 
+6. what weeks this needs to happen in (for tending processes) 
+	(should be from autofilled checkboxes)
+7. hours per week (for tending processes)
+	(a typed in number)
+
