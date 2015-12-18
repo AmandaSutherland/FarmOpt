@@ -4,7 +4,7 @@
 	{% if session.logged_in %}
 
   <div class="row">
-  <div id="left">
+  <div class="six columns">
     <h3>Labor Information</h3>
     <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
       <dl>
@@ -17,9 +17,8 @@
     </form>
   </div>
 
-  <div class="row">
   <div class="six columns">
-  		{# <h4>Table of Labor Info</h4>
+    <h4>Table of Labor Info</h4>
 		<table border="1" width="100%">
 			<tr>
 			<th>Week Number</th>
@@ -34,9 +33,12 @@
 			<em>No weeks added yet.</em>
 		 {% endfor %}
 		 </table>
-		 <br> #}
+		 <br>
+  </div>
+  </div>
 
-  <div id="right">
+  <div class="row">
+  <div class="six columns">
 		<h3>Crop Information</h3>
 		<h4>Add Crops</h4>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
@@ -56,7 +58,7 @@
 		
   <div class="six columns"> 
 		<p></p>
-		<h3>Your Crops</h3>
+		<h4>Your Crops</h4>
     	<br>
 		<table border="1" width="100%">
 			<tr>
@@ -80,27 +82,10 @@
   </div>
   </div>
 
-		{# <h1>Table of Labor Info</h1>
-		<table border="1" width="100%">
-			<tr>
-			<th>Week Number</th>
-			<th>Labor Hours per Week</th>
-			</tr>
-			{% for week in weeks %}
-			<tr>
-			<td>{{ week.id }}</td>
-			<td>{{ week.hours }}</td>
-			</tr>
-			{% else %}
-			<em>No weeks added yet.</em>
-		 {% endfor %}
-		 </table>
-		 <br> #}
-
   <div class="row">
   <div class="six columns">
-		<h2>Crop Tending Processes</h2>
-    <h3>Select Crop</h3>
+		<h3>Crop Tending Processes</h3>
+    <h4>Select Crop</h4>
   	<select>
   		{% for crop in crops %}
   		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
@@ -109,18 +94,7 @@
   		{% endfor %}
   	</select>
 
-		<h3>Tending processes {{cropname}}</h3>
-		<h3>Process Information</h3>
-    	<h4>Select Crop</h4>
-	  	<select>
-	  		{% for crop in crops %}
-	  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
-	  		{% else %}
-	  		<option value="none">None</option>
-	  		{% endfor %}
-	  	</select>
-
-  		<h4>Tending processes {{cropname}}</h4>
+ 		<h4>Tending processes {{cropname}}</h4>
 		<form>
 		<dl>
 			<dt>Add processes:
@@ -158,6 +132,7 @@
   </div>
   </div>
 
+  <div class="row">
     <h3>Your Planting Timetable</h3>
     <table border="1" width="100%">
       <tr>
@@ -176,7 +151,8 @@
      {% endfor %}
     </table>
     <br>
-
+  </div>
+  
 	{% endif %}
 	 
 {% endblock %}
