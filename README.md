@@ -12,7 +12,8 @@
 	wheel==0.24.0
 4) Run the program locally by running 'python farmopt.py' or go to the web version at 'farmoptimization.heroku.com'
 
-# For further information on our project, please see http://farmoptproject.weebly.com/
+# Further information on FarmOpt 
+	http://farmoptproject.weebly.com/
 
 # python-getting-started
 
