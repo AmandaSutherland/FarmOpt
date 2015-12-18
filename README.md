@@ -1,15 +1,15 @@
 # Running FarmOpt
 
-1) Clone the repo. \n
-2) Go through the steps below to get heroku up and running. \n
-3) Install all the following: \n
-	Flask==0.10.1 (through http://flask.pocoo.org/docs/0.10/installation/) \n
-	gunicorn==19.4.1 \n
-	itsdangerous==0.24 \n
-	Jinja2==2.8 \n
-	MarkupSafe==0.23 \n
-	Werkzeug==0.11.2 \n
-	wheel==0.24.0 \n
+1) Clone the repo. <br />
+2) Go through the steps below to get heroku up and running. <br />
+3) Install all the following: <br />
+	Flask==0.10.1 (through http://flask.pocoo.org/docs/0.10/installation/) <br />
+	gunicorn==19.4.1 <br />
+	itsdangerous==0.24 <br />
+	Jinja2==2.8 <br />
+	MarkupSafe==0.23 <br />
+	Werkzeug==0.11.2 <br />
+	wheel==0.24.0 <br />
 4) Run the program locally by running 'python farmopt.py' or go to the web version at 'farmoptimization.heroku.com'
 
 # Further information on FarmOpt 
