@@ -85,34 +85,35 @@
 	  	</select>
 
   		<h4>Tending processes {{cropname}}</h4>
-		<form>
+		<form action="{{ url_for('add_process') }}" method=post class=add-process>
 		<dl>
 			<dt>Add processes:
 			<dd><input type=text name=process>
 			<dt>Weeks for added process:
-			<dd><input type=text name=pweeks>
+			<dd><input type=integer name=pweeks>
       		<dt>Hours per week:
-      		<dd><input type=text name=phours>
-			<dd><input type=submit value=Submit>
+      		<dd><input type=integer name=phours>
+			<dd><input type=submit value=Add>
 		</dl>
 	</form>
 
     <h4>Tending Processes</h4>
     <table border="1" width="100%">
       <tr>
+      <th>Crop Name</th>
       <th>Tending Process</th>
       <th>Week</th>
       <th>Hours Per Week</th>
       </tr>
-      {% for crop in crops %} 
-      <!-- This (above) needs to be changed  -->
+      {% for process in processes %} 
       <tr>
-      <td>{{ crop.process }}</td>
-      <td>{{ crop.pweeks }}</td>
-      <td>{{ crop.phours}}</td>
+      <td>{{ process.cropname }}</td>
+      <td>{{ process.process }}</td>
+      <td>{{ process.pweeks }}</td>
+      <td>{{ process.phours }}</td>
       </tr>
       {% else %}
-      <em>No crops added yet.</em>
+      <em>No processes added yet.</em>
      {% endfor %}
     </table>
     <br>
@@ -131,18 +132,21 @@
     <h3>Your Planting Timetable</h3>
     <table border="1" width="100%">
       <tr>
-      <th></th>
-      <th>Week</th>
-      <th>Hours Per Week</th>
+      <th>Crop Name</th>
+      {% for week in range(0,totalweeks) %}
+      <th>Week {{ week.id }}</th>
+      {% endfor %}
       </tr>
       {% for crop in crops %}
+      {% for week in range(0,totalweeks) %}
       <tr>
-      <td>{{ crop.process }}</td>
+      <td>{{ crop.cropname }}</td>
       <td>{{ crop.pweeks }}</td>
       <td>{{ crop.phours}}</td>
       </tr>
       {% else %}
       <em>No crops added yet.</em>
+     {% endfor %}
      {% endfor %}
     </table>
     <br>
