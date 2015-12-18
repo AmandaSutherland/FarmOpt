@@ -10,8 +10,6 @@ from datetime import date
 # from urllib2 import urlopen  # python 2 syntax
 # from pygal.style import DarkSolarizedStyle
 
-DATABASE = '/tmp/flaskr.db'
-sqlite3 /tmp/farmopt.db < schema.sql
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object('app_config')
