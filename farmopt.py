@@ -128,6 +128,9 @@ def add_process():
 
 @app.route('/calculate', methods=['GET', 'POST'])
 def calculate():
+	user_schedule=[]
+	crop_hours=[]
+	available_hours=[]
 	print 'I am calculating'
 	cur1 = g.db.execute('select cropname, startdate, numbeds, numweeks from crops where username = ?', [session['username']])
 	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
@@ -135,17 +138,27 @@ def calculate():
 	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
 	cur3 = g.db.execute('select cropname, process, pweeks, phours from processes where username = ?', [session['username']])
 	processes = [dict(cropname=row[0], process=row[1], pweeks=row[2], phours=row[3]) for row in cur3.fetchall()]
-	# for crop in crops:
-	# 	startweek = (crop.startdate - seasonstartdate)/7
-	# 	g.db.execute('insert into weeks (startweek) values (?)',
-	# 				 [startweek])
+	index = 0
+	for crop in crops:
+		index+=1
+		schedule[index] = []
+		schedule[index][crop.startweek] = crop.numbeds
+
+	for week in weeks:
+		for weekindex in range(0,week.weeks):
+			available_hours[weekindex] = week.hours
+
+	# crop_hours still need to be generated
+
 	# Do the math!
 	# Inputs: User_Schedule and Crop_Hours are nested lists, available hours is a list
 	# Output: Tuple of lists and nested list
-	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
+	results = farmsum(user_schedule, crop_hours, available_hours)
 	hour_schedule = results[2]
 	farm_death = results[1]
 	weekly_sum = results[0]
+	print "Hour Schedule", hour_schedule, "Farm Death", farm_death, "Weekly Sum", weekly_sum
+	return redirect(url_for('crops'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
