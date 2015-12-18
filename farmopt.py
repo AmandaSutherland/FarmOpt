@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
 	 abort, render_template, flash, Response
 from contextlib import closing
+from datetime import date
 # import gss
 # import pygal
 # import json
@@ -16,6 +17,10 @@ app.config.from_object('app_config')
 # app.config.from_envvar('FARMOPT_SETTINGS', silent=True)
 
 # sqlite3 /home/selina/Documents/SoftDes/FarmOptDB/farmopt.db < schema.sql
+# Global Variables
+seasonstartdate = date.today()
+totalweeks = int
+laborhours = int
 
 def connect_db():
 	return sqlite3.connect(app.config['DATABASE'])
@@ -92,8 +97,8 @@ def plot_chart(date='20140415', state='IA', city='Ames'):
 def add_crop():
 	if not session.get('logged_in'):
 		abort(401)
-	g.db.execute('insert into crops (username, cropname, startdate, numbeds, numweeks) values (?, ?, ?, ?, ?)',
-				 [session['username'], request.form['cropname'], request.form['startdate'], request.form['numbeds'], request.form['numweeks']])
+	g.db.execute('insert into crops (username, cropname, startdate, startweek, numbeds, numweeks) values (?, ?, ?, ?, ?, ?)',
+				 [session['username'], request.form['cropname'], request.form['startdate'], startweek, request.form['numbeds'], request.form['numweeks']])
 	g.db.commit()
 	flash('New crop was successfully added')
 	return redirect(url_for('crops'))
@@ -125,6 +130,16 @@ def add_process():
 @app.route('/calculate', methods=['GET', 'POST'])
 def calculate():
 	print 'I am calculating'
+	cur1 = g.db.execute('select cropname, startdate, numbeds, numweeks from crops where username = ?', [session['username']])
+	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
+	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
+	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
+	cur3 = g.db.execute('select cropname, process, pweeks, phours from processes where username = ?', [session['username']])
+	processes = [dict(cropname=row[0], process=row[1], pweeks=row[2], phours=row[3]) for row in cur3.fetchall()]
+	# for crop in crops:
+	# 	startweek = (crop.startdate - seasonstartdate)/7
+	# 	g.db.execute('insert into weeks (startweek) values (?)',
+	# 				 [startweek])
 	# Do the math!
 	# Inputs: User_Schedule and Crop_Hours are nested lists, available hours is a list
 	# Output: Tuple of lists and nested list

@@ -3,7 +3,6 @@
 {% block body %}
 	{% if session.logged_in %}
 
-<div class=container>
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
@@ -18,7 +17,7 @@
     }
     </script>
 
-    <form>
+    <form action="{{ url_for('add_weeks') }}" method=post class=add-week>
     <label><b>How many weeks long is your growing season?</b></label>
     <input type="text" name="weeks" id="user_input1">
     <label><b>How many hours will you work per week?</b></label>
@@ -157,7 +156,7 @@
     </table>
     <br>
   </div>
-</div>
+
 
 	{% endif %}
 	 
