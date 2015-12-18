@@ -119,8 +119,18 @@ def add_process():
 	flash('New process was successfully added')
 	return redirect(url_for('crops'))
 
+@app.route('/calculate', methods=['GET', 'POST'])
+def calculate():
+	print 'I am calculating'
+	# Do the math!
+	# Inputs: User_Schedule and Crop_Hours are nested lists, available hours is a list
+	# Output: Tuple of lists and nested list
+	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
+	hour_schedule = results[2]
+	farm_death = results[1]
+	weekly_sum = results[0]
+	
 @app.route('/login', methods=['GET', 'POST'])
-# @login_required
 def login():
 	error = None
 	if request.method == 'POST':
@@ -172,16 +182,6 @@ def logout():
 	flash('You were logged out')
 	return redirect(url_for('crops'))
 
-def optimizion():
-	print 'I am optimizing'
-	 
-	# Do the math!
-	# Inputs: User_Schedule and Crop_Hours are nested lists, available hours is a list
-	# Output: Tuple of lists and nested list
-	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
-	hour_schedule = results[2]
-	farm_death = results[1]
-	weekly_sum = results[0]
 
 if __name__ == '__main__':
 	init_db()
