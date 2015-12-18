@@ -193,7 +193,7 @@
       <tr>
       <th>Crop Name</th>
       {% for week in weeks %}
-      {% for index in week.weeks %}
+      {% for index in range(1, week.weeks+1) %}
       <th>{{ index }}</th>
       {% endfor %}
       {% endfor %}
