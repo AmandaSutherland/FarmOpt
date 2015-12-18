@@ -3,9 +3,9 @@
 {% block body %}
 	{% if session.logged_in %}
 
-
   <div class="row">
-    <h2>Labor Information</h2>
+  <div id="left">
+    <h3>Labor Information</h3>
     <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
       <dl>
         <dt>How many weeks are you planning on working this planting season?
@@ -20,7 +20,7 @@
   <div class="row">
   <div class="six columns">
 		<h3>Crop Information</h3>
-		<h2>Add Crops</h2>
+		<h1>Add Crops</h1>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
 			<dl>
 				<dt>Crop Name:
@@ -38,21 +38,21 @@
 		
   <div class="six columns"> 
 		<p></p>
-    <h2>Your Crops</h2>
+    <h1>Your Crops</h1>
     <br>
 		<table border="1" width="100%">
 			<tr>
 			<th>Crop Name</th>
 			<th>Starting Date</th>
 			<th>Number of beds</th>
-      <th>Number of Weeks</th>
+      		<th>Number of Weeks</th>
 			</tr>
 			{% for crop in crops %}
 			<tr>
 			<td>{{ crop.cropname }}</td>
 			<td>{{ crop.startdate|safe }}</td>
 			<td>{{ crop.numbeds}}</td>
-      <td>{{ crop.numweeks}}</td>
+      		<td>{{ crop.numweeks}}</td>
 			</tr>
 			{% else %}
 			<em>No crops added yet.</em>
@@ -62,7 +62,7 @@
   </div>
   </div>
 
-		{# <h3>Table of Labor Info</h3>
+		{# <h1>Table of Labor Info</h1>
 		<table border="1" width="100%">
 			<tr>
 			<th>Week Number</th>
@@ -81,8 +81,8 @@
 
   <div class="row">
   <div class="six columns">
-		<h3>Crop Tending Processes</h3>
-    <h2>Select Crop</h2>
+		<h2>Crop Tending Processes</h2>
+    <h3>Select Crop</h3>
   	<select>
   		{% for crop in crops %}
   		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
@@ -90,22 +90,24 @@
   		<option value="none">None</option>
   		{% endfor %}
   	</select>
+
+		<h3>Tending processes {{cropname}}</h3>
 		<form>
 		<dl>
-			<h2>Tending processes for the crop</h2>
 			<dt>Add processes:
 			<dd><input type=text name=process>
 			<dt>Weeks for added process:
 			<dd><input type=text name=pweeks>
-      <dt>Hours per week:
-      <dd><input type=text name=phours>
+      		<dt>Hours per week:
+      		<dd><input type=text name=phours>
 			<dd><input type=submit value=Submit>
 		</dl>
     </form>
   </div>
 
   <div class="six columns">
-    <h2>Your Tending Processes</h2>
+    <p></p>
+    <h3>Your Tending Processes</h3>
     <table border="1" width="100%">
       <tr>
       <th>Tending Process</th>
@@ -127,7 +129,7 @@
   </div>
   </div>
 
-    <h3>Your Planting Timetable</h3>
+    <h1>Your Planting Timetable</h1>
     <table border="1" width="100%">
       <tr>
       <th></th>
