@@ -201,6 +201,6 @@ def logout():
 	return redirect(url_for('crops'))
 
 
-if __name__ == '__main__':
-	init_db()
-	app.run()
+# if __name__ == '__main__':
+# 	init_db()
+# 	app.run()
