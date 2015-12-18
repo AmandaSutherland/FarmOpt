@@ -1,3 +1,19 @@
+# Running FarmOpt
+
+1) Clone the repo. 
+2) Go through the steps below to get heroku up and running. 
+3) Install all the following:
+	Flask==0.10.1 (through http://flask.pocoo.org/docs/0.10/installation/)
+	gunicorn==19.4.1
+	itsdangerous==0.24
+	Jinja2==2.8
+	MarkupSafe==0.23
+	Werkzeug==0.11.2
+	wheel==0.24.0
+4) Run the program locally by running 'python farmopt.py' or go to the web version at 'farmoptimization.heroku.com'
+
+# For further information on our project, please see http://farmoptproject.weebly.com/
+
 # python-getting-started
 
 A barebones Python app, which can easily be deployed to Heroku.
