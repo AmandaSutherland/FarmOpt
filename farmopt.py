@@ -11,12 +11,13 @@ from datetime import date
 # from pygal.style import DarkSolarizedStyle
 
 DATABASE = '/tmp/flaskr.db'
+sqlite3 /tmp/farmopt.db < schema.sql
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object('app_config')
 # app.config.from_envvar('FARMOPT_SETTINGS', silent=True)
 
-# sqlite3 /home/selina/Documents/SoftDes/FarmOptDB/farmopt.db < schema.sql
+
 # Global Variables
 seasonstartdate = date.today()
 totalweeks = int
