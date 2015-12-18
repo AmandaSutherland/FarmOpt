@@ -20,3 +20,12 @@ create table weeks (
   username text not null,
   hours text not null
 );
+
+drop table if exists processes;
+create table processes (
+  username text not null,
+  cropname text not null,
+  process text not null,
+  pweeks integer not null,
+  phours integer not null
+);

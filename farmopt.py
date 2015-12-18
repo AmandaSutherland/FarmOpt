@@ -62,7 +62,9 @@ def crops():
 	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
 	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
 	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
-	return render_template('crop_page.html', crops=crops, weeks=weeks, totalweeks=len(weeks))
+	cur3 = g.db.execute('select cropname, process, pweeks, phours from processes where username = ?', [session['username']])
+	processes = [dict(cropname=row[0], process=row[1], pweeks=row[2], phours=row[3]) for row in cur3.fetchall()]
+	return render_template('crop_page.html', crops=crops, weeks=weeks, processes=processes, totalweeks=len(weeks))
 
 @app.route('/weeks')
 def weeks():
@@ -105,6 +107,16 @@ def add_weeks():
 					 [session['username'], request.form['hours']])
 	g.db.commit()
 	flash('Labor information was successfully registered')
+	return redirect(url_for('crops'))
+
+@app.route('/addprocess', methods=['POST'])
+def add_process():
+	if not session.get('logged_in'):
+		abort(401)
+	g.db.execute('insert into processes (username, cropname, process, pweeks, phours) values (?, ?, ?, ?, ?)',
+					 [session['username'], 'cropname', request.form['process'], request.form['pweeks'], request.form['phours']])
+	g.db.commit()
+	flash('New process was successfully added')
 	return redirect(url_for('crops'))
 
 @app.route('/login', methods=['GET', 'POST'])
