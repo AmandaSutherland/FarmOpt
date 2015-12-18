@@ -1,8 +1,36 @@
-<!doctype html>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>Farm Opt</h1>
-  <h3><em>Your personalized farm planting optimizer.</em></h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Farm Optimization</title>
+  <meta name="description" content="A tool for farmers who are interested in optimizing their planting schedule to fit their labor budget">
+  <meta name="author" content="Amanda Sutherland, Mimi Kome, Ziyu (Selina) Wang">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/skeleton.css') }}">
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/normalize.css') }}">
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<div class="container">
+    <section class="header">
+    <br>
+      <h3 class="title">Farm Optimization</h3>
+      <h2>Your personalized farm planting optimizer.</h2>
+    </section>
   <div class=metanav>
 
   {% if not session.logged_in %}
@@ -15,6 +43,5 @@
   {% for message in get_flashed_messages() %}
     <div class=flash>{{ message }}</div>
   {% endfor %}
-  <br>
   {% block body %}{% endblock %}
 </div>

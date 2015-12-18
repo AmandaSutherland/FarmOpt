@@ -90,8 +90,8 @@ def plot_chart(date='20140415', state='IA', city='Ames'):
 def add_crop():
 	if not session.get('logged_in'):
 		abort(401)
-	g.db.execute('insert into crops (username, cropname, startdate, numbeds) values (?, ?, ?, ?)',
-				 [session['username'], request.form['cropname'], request.form['startdate'], request.form['numbeds']])
+	g.db.execute('insert into crops (username, cropname, startdate, numbeds, numweeks) values (?, ?, ?, ?, ?)',
+				 [session['username'], request.form['cropname'], request.form['startdate'], request.form['numbeds'], request.form['numweeks']])
 	g.db.commit()
 	flash('New crop was successfully added')
 	return redirect(url_for('crops'))
