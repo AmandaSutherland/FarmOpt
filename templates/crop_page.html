@@ -24,17 +24,18 @@
     <label><b>How many hours will you work per week?</b></label>
     <input type="text" name="hours" id="user_input2">
     <label><b>When will your growing season start?</b></label>
-    <input type="date" name="startdate" id="user_input3">
+    <input type="date" name="seasonstartdate" id="user_input3">
     </form>
-    <p><input type="submit" onclick="showInput();"><br/></p>
+    <input class = "button-primary" type="submit" onclick="showInput()" value="Submit">
   </div>
     
   <div class="six columns">
-    <p><label>Your input: </label></p>
-    <p><span id='display0'></span></p>
-    <p><span id='display1'></span></p>
-    <p><span id='display2'></span></p>
+    <h4>Your Labor Info:</h4>
+    <p>Growing Season: <span id='display0'> </span> weeks</p>
+    <p>Labor Hours Per Week: <span id='display1'> </span> hours</p>
+    <p>Season Starts on: <span id='display2'></span></p>
   </div>
+
   </div>
 
   <div class="row">
@@ -51,7 +52,7 @@
 				<dd><input type=text name=numbeds>
         		<dt>Total Number of weeks for crop:
         		<dd><input type=text name=numweeks>
-				<dd><input type=submit value=Add>
+				<dd><input class = "button-primary" type=submit value=Add>
 			</dl>
 		</form>
   </div>
@@ -103,7 +104,7 @@
 			<dd><input type=integer name=pweeks>
       		<dt>Hours per week:
       		<dd><input type=integer name=phours>
-			<dd><input type=submit value=Add>
+			<dd><input class = "button-primary" type=submit value=Add>
 		</dl>
     </form>
   </div>
