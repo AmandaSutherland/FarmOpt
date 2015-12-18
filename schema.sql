@@ -1,11 +1,11 @@
-drop table if exists users;
+drop table;
 create table users (
   id integer primary key autoincrement,
   username text not null,
   password text not null
 );
 
-drop table if exists crops;
+drop table;
 create table crops (
   username text not null,
   cropname text not null,
@@ -14,7 +14,7 @@ create table crops (
   numweeks integer not null
 );
 
-drop table if exists weeks;
+drop table;
 create table weeks (
   username text not null,
   weeks integer not null,
@@ -22,7 +22,7 @@ create table weeks (
   seasonstartdate text not null
 );
 
-drop table if exists processes;
+drop table;
 create table processes (
   username text not null,
   cropname text not null,
