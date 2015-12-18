@@ -7,8 +7,6 @@
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
-    <head lang="en">
-    <meta charset="UTF-8">
     <script language="JavaScript">
     function showInput() {
     var season_length =  document.getElementById("user_input1").value;
@@ -19,17 +17,16 @@
     document.getElementById('display2').innerHTML = season_start;
     }
     </script>
-    </head>
-    <body>
+
     <form>
     <label><b>How many weeks long is your growing season?</b></label>
-    <input type="text" name="message" id="user_input1">
+    <input type="text" name="weeks" id="user_input1">
     <label><b>How many hours will you work per week?</b></label>
-    <input type="text" name="message" id="user_input2">
+    <input type="text" name="hours" id="user_input2">
     <label><b>When will your growing season start?</b></label>
-    <input type="date" name="message" id="user_input3">
+    <input type="date" name="startdate" id="user_input3">
     </form>
-    <input type="submit" onclick="showInput();"><br />
+    <p><input type="submit" onclick="showInput();"><br/></p>
   </div>
     
   <div class="six columns">
