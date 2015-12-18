@@ -10,6 +10,7 @@ create table crops (
   username text not null,
   cropname text not null,
   startdate date not null,
+  startweek integer,
   numbeds integer not null,
   numweeks integer not null
 );

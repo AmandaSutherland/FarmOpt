@@ -106,6 +106,9 @@ def add_weeks():
 		g.db.execute('insert into weeks (username, hours) values (?, ?)',
 					 [session['username'], request.form['hours']])
 	g.db.commit()
+	seasonstartdate = request.form['seasonstartdate']
+	totalweeks = int(request.form['weeks'])
+	laborhours = int(request.form['hours'])
 	flash('Labor information was successfully registered')
 	return redirect(url_for('crops'))
 
@@ -129,7 +132,7 @@ def calculate():
 	hour_schedule = results[2]
 	farm_death = results[1]
 	weekly_sum = results[0]
-	
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	error = None

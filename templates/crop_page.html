@@ -23,10 +23,9 @@
     <label><b>How many hours will you work per week?</b></label>
     <input type="text" name="hours" id="user_input2">
     <label><b>When will your growing season start?</b></label>
-    <input type="date" name="startdate" id="user_input3">
+    <input type="date" name="seasonstartdate" id="user_input3">
     </form>
-
-    <input type="submit" onclick="showInput()" value="Submit"><br />
+    <input class = "button-primary" type="submit" onclick="showInput()" value="Submit"><br />
     <label>Your input: </label>
     <p><span id='display0'></span> </p>
     <p><span id='display1'></span> </p>
@@ -48,9 +47,9 @@
 			{% else %}
 			<em>No weeks added yet.</em>
 		 {% endfor %}
-		 </table> #}
+		 </table> 
 		 <br> 
-  </div>
+  </div> #}
   </div>
 
   <div class="row">
@@ -67,7 +66,7 @@
 				<dd><input type=text name=numbeds>
         		<dt>Total Number of weeks for crop:
         		<dd><input type=text name=numweeks>
-				<dd><input type=submit value=Add>
+				<dd><input class = "button-primary" type=submit value=Add>
 			</dl>
 		</form>
   </div>
@@ -119,7 +118,7 @@
 			<dd><input type=integer name=pweeks>
       		<dt>Hours per week:
       		<dd><input type=integer name=phours>
-			<dd><input type=submit value=Add>
+			<dd><input class = "button-primary" type=submit value=Add>
 		</dl>
     </form>
   </div>
