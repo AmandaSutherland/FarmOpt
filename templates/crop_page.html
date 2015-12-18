@@ -3,6 +3,7 @@
 {% block body %}
 	{% if session.logged_in %}
 
+<div class=container>
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
@@ -25,31 +26,16 @@
     <label><b>When will your growing season start?</b></label>
     <input type="date" name="seasonstartdate" id="user_input3">
     </form>
-    <input class = "button-primary" type="submit" onclick="showInput()" value="Submit"><br />
-    <label>Your input: </label>
-    <p><span id='display0'></span> </p>
-    <p><span id='display1'></span> </p>
-    <p><span id='display2'></span> </p>
+    <input class = "button-primary" type="submit" onclick="showInput()" value="Submit">
   </div>
-
-  {# <div class="six columns">
-    <h4>Table of Labor Info</h4>
-		<table border="1" width="100%">
-			<tr>
-			<th>Week Number</th>
-			<th>Labor Hours per Week</th>
-			</tr>
-			{% for week in weeks %}
-			<tr>
-			<td>{{ week.id }}</td>
-			<td>{{ week.hours }}</td>
-			</tr>
-			{% else %}
-			<em>No weeks added yet.</em>
-		 {% endfor %}
-		 </table> 
-		 <br> 
-  </div> #}
+    
+  <div class="six columns">
+    <p><label>Your input: </label></p>
+    <p><span id='display0'></span></p>
+    <p><span id='display1'></span></p>
+    <p><span id='display2'></span></p>
+  </div>
+>>>>>>> 7f363075fc526b4e5e7842e3fbb349d4a5ae7374
   </div>
 
   <div class="row">
@@ -171,6 +157,7 @@
     </table>
     <br>
   </div>
+</div>
 
 	{% endif %}
 	 
