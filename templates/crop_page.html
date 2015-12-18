@@ -3,7 +3,7 @@
 {% block body %}
 	{% if session.logged_in %}
 
-<div class=container yellow>
+<div class="container yellow">
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
@@ -100,10 +100,11 @@
 		<dl>
 			<dt>Add processes:
 			<dd><input type=text name=process>
-			<dt>Weeks for added process:
-			<dd><input type=integer name=pweeks>
-      		<dt>Hours per week:
-      		<dd><input type=integer name=phours>
+			<dt>Weeks for added process:<p>
+      <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+      <input type="checkbox" name="vehicle" value="Car"> I have a car<br>
+  		<dt>Hours per week:
+  		<dd><input type=integer name=phours>
 			<dd><input class = "button-primary" type=submit value=Add>
 		</dl>
     </form>
