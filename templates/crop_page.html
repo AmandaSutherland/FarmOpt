@@ -6,15 +6,33 @@
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
-    <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
-      <dl>
-        <dt>How many weeks are you planning on working this planting season?
-        <dd><input type=integer name=weeks>
-        <dt>How many hours can you work per week?
-        <dd><input type=text name=hours>
-        <dd><input type=submit value=Submit>
-      </dl>
+    <head lang="en">
+    <meta charset="UTF-8">
+    <script language="JavaScript">
+    function showInput() {
+    var season_length =  document.getElementById("user_input1").value;
+    var hours_week =  document.getElementById("user_input2").value;
+    var season_start =  document.getElementById("user_input3").value;
+    document.getElementById('display0').innerHTML = season_length;
+    document.getElementById('display1').innerHTML = hours_week;
+    document.getElementById('display2').innerHTML = season_start;
+    }
+    </script>
+    </head>
+    <body>
+    <form>
+    <label><b>How many weeks long is your growing season?</b></label>
+    <input type="text" name="message" id="user_input1">
+    <label><b>How many hours will you work per week?</b></label>
+    <input type="text" name="message" id="user_input2">
+    <label><b>When will your growing season start?</b></label>
+    <input type="date" name="message" id="user_input3">
     </form>
+    <input type="submit" onclick="showInput();"><br />
+    <label>Your input: </label>
+    <p><span id='display0'></span> </p>
+    <p><span id='display1'></span> </p>
+    <p><span id='display2'></span> </p>
   </div>
 
   <div class="six columns">
@@ -156,7 +174,7 @@
     </table>
     <br>
   </div>
-  
+
 	{% endif %}
 	 
 {% endblock %}
