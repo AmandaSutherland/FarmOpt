@@ -73,8 +73,8 @@
 				<dt>Number of Beds:
 				<dd><input type=number name=numbeds>
     		<dt>Total Number of weeks for crop:
-    		<dd><input type=number name=numweeks>
-				<dd><input class = "button-primary" type=submit value=Add>
+    		<dd><input id='numweeks' type=number name=numweeks>
+				<dd><input class = "button-primary" type=submit value=Add onchange="createCheckboxes">
 			</dl>
 		</form>
   </div>
@@ -110,12 +110,16 @@
 		<h3>Crop Tending Processes</h3>
     <h4>Select Crop</h4>
     <form action="{{ url_for('add_process') }}" method=post class=add-process>
+
     <script language="JavaScript">
+
     function check(index) {
     var checked =  document.getElementById("checkweek").checked;
     selectedweeks[index] = checked;
     }
+
     </script>
+
   	<select id="selectcrop">
   		{% for crop in crops %}
   		<option value="cropname" name="selected">{{crop.cropname}} - starting week {{crop.startweek}}</option>
@@ -128,17 +132,19 @@
 			<dt>Add processes:</dt>
 			<dd><input type=text name=process></dd>
 			<dt>Weeks for added process:</dt>
-      <p>
+      <div id="checkbox_div">
+      </div>
+
       {% for week in weeks %}
       {% for index in range(1,week.weeks+1) %}
-       <div class="one column">
-      {{index}} <input type="checkbox" name=pweeks id="checkweek" onselect="check({{index}})">
+      <div class="one column">
+      {{index}} <input type="checkbox" name="pweeks" id="checkweek" onselect="check({{index}})">
       </div>
       {% endfor %}
       {% endfor %}
+
       </p>
-      <p>
-  		<dt>Hours per week:</dt>
+      <br><dt>Hours per week:</dt>
   		<dd><input type=float name=phours></dd>
       </p>
 			<dd><input class = "button-primary" type=submit value=Add></dd>
