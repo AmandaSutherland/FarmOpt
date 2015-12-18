@@ -63,13 +63,13 @@ def teardown_request(exception):
 def crops():
 	if not session.get('logged_in'):
 		return redirect(url_for('login'))
-	cur1 = g.db.execute('select cropname, startdate, numbeds, numweeks from crops where username = ?', [session['username']])
-	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
-	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
-	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
+	cur1 = g.db.execute('select cropname, startweek, numbeds, numweeks from crops where username = ?', [session['username']])
+	crops = [dict(cropname=row[0], startweek=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
+	cur2 = g.db.execute('select weeks, hours, seasonstartdate from weeks where username = ?', [session['username']])
+	weeks = [dict(weeks=row[0], hours=row[1], seasonstartdate=row[2]) for row in cur2.fetchall()]
 	cur3 = g.db.execute('select cropname, process, pweeks, phours from processes where username = ?', [session['username']])
 	processes = [dict(cropname=row[0], process=row[1], pweeks=row[2], phours=row[3]) for row in cur3.fetchall()]
-	return render_template('crop_page.html', crops=crops, weeks=weeks, processes=processes, totalweeks=len(weeks))
+	return render_template('crop_page.html', crops=crops, weeks=weeks, processes=processes, totalweeks=len(weeks), selectedweeks=[])
 
 @app.route('/weeks')
 def weeks():
@@ -79,7 +79,7 @@ def weeks():
 	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2]) for row in cur1.fetchall()]
 	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
 	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
-	return render_template('crop_page.html', crops=crops, weeks=weeks, numweeks=len(weeks))
+	return render_template('crop_page.html', crops=crops, weeks=weeks, selectedweeks=[], numweeks=len(weeks))
 
 @app.route('/chart')
 def plot_chart(date='20140415', state='IA', city='Ames'):
@@ -97,8 +97,8 @@ def plot_chart(date='20140415', state='IA', city='Ames'):
 def add_crop():
 	if not session.get('logged_in'):
 		abort(401)
-	g.db.execute('insert into crops (username, cropname, startdate, startweek, numbeds, numweeks) values (?, ?, ?, ?, ?, ?)',
-				 [session['username'], request.form['cropname'], request.form['startdate'], startweek, request.form['numbeds'], request.form['numweeks']])
+	g.db.execute('insert into crops (username, cropname, startweek, numbeds, numweeks) values (?, ?, ?, ?, ?)',
+				 [session['username'], request.form['cropname'], request.form['startweek'], request.form['numbeds'], request.form['numweeks']])
 	g.db.commit()
 	flash('New crop was successfully added')
 	return redirect(url_for('crops'))
@@ -107,9 +107,9 @@ def add_crop():
 def add_weeks():
 	if not session.get('logged_in'):
 		abort(401)
-	for week in range(0,int(request.form['weeks'])):
-		g.db.execute('insert into weeks (username, hours) values (?, ?)',
-					 [session['username'], request.form['hours']])
+	g.db.execute("delete from weeks where username = ?", [session['username']])
+	g.db.execute('insert into weeks (username, weeks, hours, seasonstartdate) values (?, ?, ?, ?)',
+				 [session['username'], request.form['weeks'], request.form['hours'], request.form['seasonstartdate']])
 	g.db.commit()
 	seasonstartdate = request.form['seasonstartdate']
 	totalweeks = int(request.form['weeks'])
@@ -122,7 +122,7 @@ def add_process():
 	if not session.get('logged_in'):
 		abort(401)
 	g.db.execute('insert into processes (username, cropname, process, pweeks, phours) values (?, ?, ?, ?, ?)',
-					 [session['username'], 'cropname', request.form['process'], request.form['pweeks'], request.form['phours']])
+					 [session['username'], request.form['selected'], request.form['process'], request.form['selectedweeks'], request.form['phours']])
 	g.db.commit()
 	flash('New process was successfully added')
 	return redirect(url_for('crops'))

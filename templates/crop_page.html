@@ -6,35 +6,58 @@
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
-    <script language="JavaScript">
-    function showInput() {
-    var season_length =  document.getElementById("user_input1").value;
-    var hours_week =  document.getElementById("user_input2").value;
-    var season_start =  document.getElementById("user_input3").value;
-    document.getElementById('display0').innerHTML = season_length;
-    document.getElementById('display1').innerHTML = hours_week;
-    document.getElementById('display2').innerHTML = season_start;
-    }
-    </script>
-
     <form action="{{ url_for('add_weeks') }}" method=post class=add-week>
+      <dl>
+        <dt>How many weeks long is your growing season?
+        <dd><input type=number name=weeks>
+        <dt>How many hours will you work per week?
+        <dd><input type=number name=hours>
+        <dt>When will your growing season start?
+        <dd><input type=date name=seasonstartdate>
+        <dd><input class = "button-primary" type=submit value=Submit>
+      </dl>
+    </form>
+    </div>
+
+    {# <form action="{{ url_for('add_weeks') }}" method=post class=add-week>
     <label><b>How many weeks long is your growing season?</b></label>
-    <input type="text" name="weeks" id="user_input1">
+    <input type="number" name="weeks" id="user_input1">
     <label><b>How many hours will you work per week?</b></label>
-    <input type="text" name="hours" id="user_input2">
+    <input type="number" name="hours" id="user_input2">
     <label><b>When will your growing season start?</b></label>
     <input type="date" name="seasonstartdate" id="user_input3">
     </form>
     <input class = "button-primary" type="submit" onclick="showInput()" value="Submit">
-  </div>
+  </div> #}
     
-  <div class="six columns">
+  {# <div class="six columns">
     <h4>Your Labor Info:</h4>
     <p>Growing Season: <span id='display0'> </span> weeks</p>
     <p>Labor Hours Per Week: <span id='display1'> </span> hours</p>
     <p>Season Starts on: <span id='display2'></span></p>
-  </div>
+  </div> #}
 
+  <div class="six columns">
+    <br>
+    <h4>Your Labor Info:</h4>
+    <table border="1" width="100%">
+      <tr>
+      <th>Season Length in Weeks</th>
+      <th>Labor Hours Per Week</th>
+      <th>Season Starts on:</th>
+      </tr>
+      {% for week in weeks %}
+      <tr>
+      <td>{{ week.weeks }}</td>
+      <td>{{ week.hours }}</td>
+      <td>{{ week.seasonstartdate }}</td>
+      </tr>
+      {% else %}
+      <em>No labor info added yet.</em>
+     {% endfor %}
+    </table>
+    <br>
+  </div>
   </div>
 
   <div class="row">
@@ -46,11 +69,11 @@
 				<dt>Crop Name:
 				<dd><input type=text name=cropname>
 				<dt>Date starting (give week number):
-				<dd><input type=number name=startdate>
+				<dd><input type=number name=startweek>
 				<dt>Number of Beds:
-				<dd><input type=text name=numbeds>
+				<dd><input type=number name=numbeds>
     		<dt>Total Number of weeks for crop:
-    		<dd><input type=text name=numweeks>
+    		<dd><input type=number name=numweeks>
 				<dd><input class = "button-primary" type=submit value=Add>
 			</dl>
 		</form>
@@ -70,9 +93,9 @@
 			{% for crop in crops %}
 			<tr>
 			<td>{{ crop.cropname }}</td>
-			<td>{{ crop.startdate|safe }}</td>
+			<td>{{ crop.startweek }}</td>
 			<td>{{ crop.numbeds}}</td>
-      		<td>{{ crop.numweeks}}</td>
+      <td>{{ crop.numweeks}}</td>
 			</tr>
 			{% else %}
 			<em>No crops added yet.</em>
@@ -86,25 +109,39 @@
   <div class="six columns">
 		<h3>Crop Tending Processes</h3>
     <h4>Select Crop</h4>
-  	<select>
+    <form action="{{ url_for('add_process') }}" method=post class=add-process>
+    <script language="JavaScript">
+    function check() {
+    var checked =  document.getElementById("checkweek").checked;
+    selectedweeks[{{index}}] = checked;
+    }
+    </script>
+  	<select id="selectcrop">
   		{% for crop in crops %}
-  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
+  		<option value="cropname" name="selected">{{crop.cropname}} - starting week {{crop.startweek}}</option>
   		{% else %}
   		<option value="none">None</option>
   		{% endfor %}
   	</select>
-
-  		<h4>Tending processes {{cropname}}</h4>
-		<form action="{{ url_for('add_process') }}" method=post class=add-process>
+  		<h4>Tending processes </h4>
 		<dl>
-			<dt>Add processes:
-			<dd><input type=text name=process>
-			<dt>Weeks for added process:<p>
-      <input type="checkbox" name="vehicle" value="Bike"> Week #<br>
-      <input type="checkbox" name="vehicle" value="Car"> Week #<br>
-  		<dt>Hours per week:
-  		<dd><input type=integer name=phours>
-			<dd><input class = "button-primary" type=submit value=Add>
+			<dt>Add processes:</dt>
+			<dd><input type=text name=process></dd>
+			<dt>Weeks for added process:</dt>
+      <p>
+      {% for week in weeks %}
+      {% for index in range(1,week.weeks+1) %}
+       <div class="one column">
+      {{index}} <input type="checkbox" name=pweeks id="checkweek" onselect="check({{index}})">
+      </div>
+      {% endfor %}
+      {% endfor %}
+      </p>
+      <p>
+  		<dt>Hours per week:</dt>
+  		<dd><input type=float name=phours></dd>
+      </p>
+			<dd><input class = "button-primary" type=submit value=Add></dd>
 		</dl>
     </form>
   </div>
@@ -139,19 +176,23 @@
     <table border="1" width="100%">
       <tr>
       <th>Crop Name</th>
-      {% for week in range(1,totalweeks+1) %}
-      <th>{{ week }}</th>
+      {% for week in weeks %}
+      {% for index in week.weeks %}
+      <th>{{ index }}</th>
+      {% endfor %}
       {% endfor %}
       </tr>
       {% for crop in crops %}
-      {% for week in range(0,totalweeks) %}
+      {% for week in weeks %}
+      {% for index in week.weeks %}
       <tr>
       <td>{{ crop.cropname }}</td>
-      <td>{{ crop.pweeks }}</td>
-      <td>{{ crop.phours}}</td>
+      <td>{{ crop.numweeks }}</td>
+      <td>{{ crop.numbeds}}</td>
       </tr>
       {% else %}
       <em>No crops added yet.</em>
+     {% endfor %}
      {% endfor %}
      {% endfor %}
     </table>

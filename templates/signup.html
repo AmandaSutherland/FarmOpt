@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Sign Up</h2>
+  <br>
+  <h4>Sign Up</h4>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('signup') }}" method=post>
     <dl>

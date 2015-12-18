@@ -9,7 +9,6 @@ drop table if exists crops;
 create table crops (
   username text not null,
   cropname text not null,
-  startdate date not null,
   startweek integer not null,
   numbeds integer not null,
   numweeks integer not null
@@ -17,9 +16,10 @@ create table crops (
 
 drop table if exists weeks;
 create table weeks (
-  id integer primary key autoincrement,
   username text not null,
-  hours text not null
+  weeks integer not null,
+  hours integer not null,
+  seasonstartdate text not null
 );
 
 drop table if exists processes;
