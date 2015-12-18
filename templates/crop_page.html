@@ -3,6 +3,8 @@
 {% block body %}
 	{% if session.logged_in %}
 
+<div id="container">
+  <div id="left">
     <h2>Labor Information</h2>
     <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
       <dl>
@@ -13,9 +15,11 @@
         <dd><input type=submit value=Submit>
       </dl>
     </form>
+  </div>
 
-		<h2>Crop Information</h2>
-		<h3>Add Crops</h3>
+  <div id="right">
+		<h3>Crop Information</h3>
+		<h2>Add Crops</h2>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
 			<dl>
 				<dt>Crop Name:
@@ -29,8 +33,10 @@
 				<dd><input type=submit value=Add>
 			</dl>
 		</form>
+  </div>
 		
-		<h3>Your Crops</h3>
+		<h2>Your Crops</h2>
+    <br>
 		<table border="1" width="100%">
 			<tr>
 			<th>Crop Name</th>
@@ -68,25 +74,16 @@
 		 </table>
 		 <br> #}
 
-		<h3>Select Crop</h3>
-  	<select id="selectcrop">
+
+		<h3>Crop Information</h3>
+    <h2>Select Crop</h2>
+  	<select>
   		{% for crop in crops %}
   		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
   		{% else %}
   		<option value="none">None</option>
   		{% endfor %}
   	</select>
-
-<!-- Leaving this for when we want to implement flexability -->
-<!-- 	<h2>Flexability for the crop</h2>  <form> 
-		<dl>
-			<dt>Flexability of week:
-			<dd><input type=text name=flexweek>
-			<dt>Flexability in beds:
-			<dd><input type=integer name=flexbeds>
-			<dd><input type=submit value=Submit>
-		</dl>
-	</form> -->
 
 		<form>
 		<dl>
@@ -121,6 +118,17 @@
     </table>
     <br>
 
+    <!-- Leaving this for when we want to implement flexability -->
+<!-- 	<h2>Flexability for the crop</h2>  <form> 
+		<dl>
+			<dt>Flexability of week:
+			<dd><input type=text name=flexweek>
+			<dt>Flexability in beds:
+			<dd><input type=integer name=flexbeds>
+			<dd><input type=submit value=Submit>
+		</dl>
+	</form> -->
+
     <h2>Your Planting Timetable</h2>
     <table border="1" width="100%">
       <tr>
@@ -139,6 +147,7 @@
      {% endfor %}
     </table>
     <br>
+</div>
 
 	{% endif %}
 	 
