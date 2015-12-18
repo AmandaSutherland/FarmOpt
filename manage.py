@@ -1,4 +1,4 @@
 import farmopt
 
 if __name__ == "__main__":
-    init_db()
+    farmopt.init_db()
