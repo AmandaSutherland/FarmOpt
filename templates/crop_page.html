@@ -3,8 +3,8 @@
 {% block body %}
 	{% if session.logged_in %}
 
-<div id="container">
-  <div id="left">
+
+  <div class="row">
     <h2>Labor Information</h2>
     <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
       <dl>
@@ -17,7 +17,8 @@
     </form>
   </div>
 
-  <div id="right">
+  <div class="row">
+  <div class="six columns">
 		<h3>Crop Information</h3>
 		<h2>Add Crops</h2>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
@@ -35,7 +36,9 @@
 		</form>
   </div>
 		
-		<h2>Your Crops</h2>
+  <div class="six columns"> 
+		<p></p>
+    <h2>Your Crops</h2>
     <br>
 		<table border="1" width="100%">
 			<tr>
@@ -56,6 +59,8 @@
 		 {% endfor %}
 		</table>
 		<br>
+  </div>
+  </div>
 
 		{# <h3>Table of Labor Info</h3>
 		<table border="1" width="100%">
@@ -74,7 +79,9 @@
 		 </table>
 		 <br> #}
 
-		<h3>Crop Information</h3>
+  <div class="row">
+  <div class="six columns">
+		<h3>Crop Tending Processes</h3>
     <h2>Select Crop</h2>
   	<select>
   		{% for crop in crops %}
@@ -83,18 +90,6 @@
   		<option value="none">None</option>
   		{% endfor %}
   	</select>
-
-<!-- Leaving this for when we want to implement flexability -->
-<!-- 	<h2>Flexability for the crop</h2>  <form> 
-		<dl>
-			<dt>Flexability of week:
-			<dd><input type=text name=flexweek>
-			<dt>Flexability in beds:
-			<dd><input type=integer name=flexbeds>
-			<dd><input type=submit value=Submit>
-		</dl>
-	</form> -->
-
 		<form>
 		<dl>
 			<h2>Tending processes for the crop</h2>
@@ -106,9 +101,11 @@
       <dd><input type=text name=phours>
 			<dd><input type=submit value=Submit>
 		</dl>
-	</form>
+    </form>
+  </div>
 
-    <h3>Tending Processes</h3>
+  <div class="six columns">
+    <h2>Your Tending Processes</h2>
     <table border="1" width="100%">
       <tr>
       <th>Tending Process</th>
@@ -127,8 +124,10 @@
      {% endfor %}
     </table>
     <br>
+  </div>
+  </div>
 
-    <h2>Your Planting Timetable</h2>
+    <h3>Your Planting Timetable</h3>
     <table border="1" width="100%">
       <tr>
       <th></th>
@@ -146,7 +145,7 @@
      {% endfor %}
     </table>
     <br>
-</div>
+
 
 	{% endif %}
 	 
