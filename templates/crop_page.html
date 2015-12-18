@@ -3,6 +3,7 @@
 {% block body %}
 	{% if session.logged_in %}
 
+<div class=container>
   <div class="row">
   <div class="six columns">
     <h3>Labor Information</h3>
@@ -29,7 +30,10 @@
     <input type="date" name="message" id="user_input3">
     </form>
     <input type="submit" onclick="showInput();"><br />
-    <label>Your input: </label>   
+  </div>
+    
+  <div class="six columns">
+    <p><label>Your input: </label></p>
     <p><span id='display0'></span></p>
     <p><span id='display1'></span></p>
     <p><span id='display2'></span></p>
@@ -155,6 +159,7 @@
     </table>
     <br>
   </div>
+</div>
 
 	{% endif %}
 	 
