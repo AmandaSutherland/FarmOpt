@@ -5,7 +5,7 @@
 
 <div id="container">
   <div id="left">
-    <h2>Labor Information</h2>
+    <h3>Labor Information</h3>
     <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
       <dl>
         <dt>How many weeks are you planning on working this planting season?
@@ -19,7 +19,7 @@
 
   <div id="right">
 		<h3>Crop Information</h3>
-		<h2>Add Crops</h2>
+		<h1>Add Crops</h1>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
 			<dl>
 				<dt>Crop Name:
@@ -35,21 +35,21 @@
 		</form>
   </div>
 		
-		<h2>Your Crops</h2>
-    <br>
+		<h1>Your Crops</h1>
+    	<br>
 		<table border="1" width="100%">
 			<tr>
 			<th>Crop Name</th>
 			<th>Starting Date</th>
 			<th>Number of beds</th>
-      <th>Number of Weeks</th>
+      		<th>Number of Weeks</th>
 			</tr>
 			{% for crop in crops %}
 			<tr>
 			<td>{{ crop.cropname }}</td>
 			<td>{{ crop.startdate|safe }}</td>
 			<td>{{ crop.numbeds}}</td>
-      <td>{{ crop.numweeks}}</td>
+      		<td>{{ crop.numweeks}}</td>
 			</tr>
 			{% else %}
 			<em>No crops added yet.</em>
@@ -57,7 +57,7 @@
 		</table>
 		<br>
 
-		{# <h3>Table of Labor Info</h3>
+		{# <h1>Table of Labor Info</h1>
 		<table border="1" width="100%">
 			<tr>
 			<th>Week Number</th>
@@ -75,19 +75,19 @@
 		 <br> #}
 
 
-		<h3>Crop Information</h3>
-    <h2>Select Crop</h2>
-  	<select>
-  		{% for crop in crops %}
-  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
-  		{% else %}
-  		<option value="none">None</option>
-  		{% endfor %}
-  	</select>
+		<h3>Process Information</h3>
+    	<h1>Select Crop</h1>
+	  	<select>
+	  		{% for crop in crops %}
+	  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
+	  		{% else %}
+	  		<option value="none">None</option>
+	  		{% endfor %}
+	  	</select>
 
+  		<h1>Tending processes {{cropname}}</h1>
 		<form>
 		<dl>
-			<h2>Tending processes {{cropname}}</h2>
 			<dt>Add processes:
 			<dd><input type=text name=process>
 			<dt>Weeks for added process:
@@ -98,7 +98,7 @@
 		</dl>
 	</form>
 
-    <h3>Tending Processes</h3>
+    <h1>Tending Processes</h1>
     <table border="1" width="100%">
       <tr>
       <th>Tending Process</th>
@@ -129,7 +129,7 @@
 		</dl>
 	</form> -->
 
-    <h2>Your Planting Timetable</h2>
+    <h1>Your Planting Timetable</h1>
     <table border="1" width="100%">
       <tr>
       <th></th>
