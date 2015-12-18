@@ -58,11 +58,11 @@ def teardown_request(exception):
 def crops():
 	if not session.get('logged_in'):
 		return redirect(url_for('login'))
-	cur1 = g.db.execute('select cropname, startdate, numbeds from crops where username = ?', [session['username']])
-	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2]) for row in cur1.fetchall()]
+	cur1 = g.db.execute('select cropname, startdate, numbeds, numweeks from crops where username = ?', [session['username']])
+	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
 	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
 	weeks = [dict(id=row[0], hours=row[1]) for row in cur2.fetchall()]
-	return render_template('crop_page.html', crops=crops, weeks=weeks, numweeks=len(weeks))
+	return render_template('crop_page.html', crops=crops, weeks=weeks, totalweeks=len(weeks))
 
 @app.route('/weeks')
 def weeks():

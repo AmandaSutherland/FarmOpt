@@ -69,7 +69,7 @@
 		 <br> #}
 
 		<h3>Select Crop</h3>
-  	<select>
+  	<select id="selectcrop">
   		{% for crop in crops %}
   		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
   		{% else %}
@@ -90,13 +90,13 @@
 
 		<form>
 		<dl>
-			<h2>Tending processes for the crop</h2>
+			<h2>Tending processes {{cropname}}</h2>
 			<dt>Add processes:
 			<dd><input type=text name=process>
 			<dt>Weeks for added process:
 			<dd><input type=text name=pweeks>
-      <dt>Hours per week:
-      <dd><input type=text name=phours>
+      		<dt>Hours per week:
+      		<dd><input type=text name=phours>
 			<dd><input type=submit value=Submit>
 		</dl>
 	</form>
