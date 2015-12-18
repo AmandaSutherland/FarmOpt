@@ -3,8 +3,8 @@
 {% block body %}
 	{% if session.logged_in %}
 
-<div id="container">
-  <div id="left">
+  <div class="row">
+  <div class="six columns">
     <h3>Labor Information</h3>
     <form action="{{ url_for('add_weeks') }}" method=post class=add-weeks>
       <dl>
@@ -17,7 +17,8 @@
     </form>
   </div>
 
-  		{# <h4>Table of Labor Info</h4>
+  <div class="six columns">
+    <h4>Table of Labor Info</h4>
 		<table border="1" width="100%">
 			<tr>
 			<th>Week Number</th>
@@ -32,9 +33,12 @@
 			<em>No weeks added yet.</em>
 		 {% endfor %}
 		 </table>
-		 <br> #}
+		 <br>
+  </div>
+  </div>
 
-  <div id="right">
+  <div class="row">
+  <div class="six columns">
 		<h3>Crop Information</h3>
 		<h4>Add Crops</h4>
 		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
@@ -52,7 +56,9 @@
 		</form>
   </div>
 		
-		<h3>Your Crops</h3>
+  <div class="six columns"> 
+		<p></p>
+		<h4>Your Crops</h4>
     	<br>
 		<table border="1" width="100%">
 			<tr>
@@ -73,16 +79,20 @@
 		 {% endfor %}
 		</table>
 		<br>
+  </div>
+  </div>
 
-		<h3>Process Information</h3>
-    	<h4>Select Crop</h4>
-	  	<select>
-	  		{% for crop in crops %}
-	  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
-	  		{% else %}
-	  		<option value="none">None</option>
-	  		{% endfor %}
-	  	</select>
+  <div class="row">
+  <div class="six columns">
+		<h3>Crop Tending Processes</h3>
+    <h4>Select Crop</h4>
+  	<select>
+  		{% for crop in crops %}
+  		<option value="cropname">{{crop.cropname}} - {{crop.startdate}}</option>
+  		{% else %}
+  		<option value="none">None</option>
+  		{% endfor %}
+  	</select>
 
   		<h4>Tending processes {{cropname}}</h4>
 		<form action="{{ url_for('add_process') }}" method=post class=add-process>
@@ -95,9 +105,12 @@
       		<dd><input type=integer name=phours>
 			<dd><input type=submit value=Add>
 		</dl>
-	</form>
+    </form>
+  </div>
 
-    <h4>Tending Processes</h4>
+  <div class="six columns">
+    <p></p>
+    <h4>Your Tending Processes</h4>
     <table border="1" width="100%">
       <tr>
       <th>Crop Name</th>
@@ -117,18 +130,10 @@
      {% endfor %}
     </table>
     <br>
+  </div>
+  </div>
 
-    <!-- Leaving this for when we want to implement flexability -->
-<!-- 	<h3>Flexability for the crop</h3>  <form> 
-		<dl>
-			<dt>Flexability of week:
-			<dd><input type=text name=flexweek>
-			<dt>Flexability in beds:
-			<dd><input type=integer name=flexbeds>
-			<dd><input type=submit value=Submit>
-		</dl>
-	</form> -->
-
+  <div class="row">
     <h3>Your Planting Timetable</h3>
     <table border="1" width="100%">
       <tr>
@@ -150,8 +155,8 @@
      {% endfor %}
     </table>
     <br>
-</div>
-
+  </div>
+  
 	{% endif %}
 	 
 {% endblock %}
