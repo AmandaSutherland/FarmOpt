@@ -28,10 +28,4 @@ if __name__  == "__main__":
 	Crop_Hours = np.array([[.5, .5, .5, 0, 0], [1, 1.5, 0, 0, 0], [2, 2, 2, 0, 0]])
 	Available_Hours = np.array([2, 2, 3, 4, 2])
 	print farmsum(User_Schedule, Crop_Hours, Available_Hours)
-	results = farmsum(User_Schedule, Crop_Hours, Available_Hours)
-	hour_schedule = results[2]
-	farm_death = results[1]
-	weekly_sum = results[0]
-	print "hour_schedule", hour_schedule
-	print "farm_death", farm_death
-	print "weekly sum", weekly_sum
+	
