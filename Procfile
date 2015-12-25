@@ -1,0 +1,1 @@
+web: gunicorn farmopt:app --log-file=-

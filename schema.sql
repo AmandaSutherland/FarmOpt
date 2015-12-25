@@ -1,10 +1,3 @@
-drop table if exists entries;
-create table entries (
-  id integer primary key autoincrement,
-  title text not null,
-  text text not null
-);
-
 drop table if exists users;
 create table users (
   id integer primary key autoincrement,
@@ -14,14 +7,26 @@ create table users (
 
 drop table if exists crops;
 create table crops (
-  id integer primary key autoincrement,
-  title text not null,
-  text text not null
+  username text not null,
+  cropname text not null,
+  startweek integer not null,
+  numbeds integer not null,
+  numweeks integer not null
 );
 
 drop table if exists weeks;
 create table weeks (
-  id integer primary key autoincrement,
-  title text not null,
-  text text not null
+  username text not null,
+  weeks integer not null,
+  hours integer not null,
+  seasonstartdate text not null
+);
+
+drop table if exists processes;
+create table processes (
+  username text not null,
+  cropname text not null,
+  process text not null,
+  pweeks integer not null,
+  phours integer not null
 );

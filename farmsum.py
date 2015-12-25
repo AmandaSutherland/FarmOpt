@@ -24,8 +24,8 @@ if __name__  == "__main__":
 	#User_Schedule =np.genfromtxt('farmeroptinputmatrix.csv', delimiter = ',', skiprows = 1)[:,1:]
 	#Crop_Hours = np.genfromtxt('farmeroptinputmatrix.csv', delimiter = ',', skiprows = 1)[:,1:]
 
-	User_Schedule = np.array([[0,2,0,0,0], [1, 1, 0, 0, 0], [0, 0, 1, 0, 0]])
-	Crop_Hours = np.array([[.5, .5, .5, 0, 0], [1, 1.5, 0, 0, 0], [2, 2, 2, 0, 0]])
-	Available_Hours = np.array([2, 2, 3, 4, 2])
+	User_Schedule = np.array([[0,2,0,0,0], [1, 1, 0, 0, 0], [0, 0, 1, 0, 0]]) # Num of crop beds
+	Crop_Hours = np.array([[.5, .5, .5, 0, 0], [1, 1.5, 0, 0, 0], [2, 2, 2, 0, 0]]) # Labor per week
+	Available_Hours = np.array([2, 2, 3, 4, 2]) # Available hours per week
 	print farmsum(User_Schedule, Crop_Hours, Available_Hours)
 	

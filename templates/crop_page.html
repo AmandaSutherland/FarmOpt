@@ -1,69 +1,210 @@
 {% extends "layout.html" %}
 
 {% block body %}
+	{% if session.logged_in %}
 
-    <h2>Crop Information</h2>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('crops') }}" method=post>
-    <dl>
-      <dt>Crop Name:
-      <dd><input type=text name=cropname>
-      <dt>Date starting:
-      <dd><input type="date" name="crop_date">
-      <dt>Number of Beds:
-      <dd><input type=text name=numberbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+  <div class="row">
+  <div class="six columns">
+    <h3>Labor Information</h3>
+    <form action="{{ url_for('add_weeks') }}" method=post class=add-week>
+      <dl>
+        <dt>How many weeks long is your growing season?
+        <dd><input type=number name=weeks>
+        <dt>How many hours will you work per week?
+        <dd><input type=number name=hours>
+        <dt>When will your growing season start?
+        <dd><input type=date name=seasonstartdate>
+        <dd><input class = "button-primary" type=submit value=Submit>
+      </dl>
+    </form>
+    </div>
 
-  <table class="table"><h2>Table of crops and beds</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
+    {# <form action="{{ url_for('add_weeks') }}" method=post class=add-week>
+    <label><b>How many weeks long is your growing season?</b></label>
+    <input type="number" name="weeks" id="user_input1">
+    <label><b>How many hours will you work per week?</b></label>
+    <input type="number" name="hours" id="user_input2">
+    <label><b>When will your growing season start?</b></label>
+    <input type="date" name="seasonstartdate" id="user_input3">
+    </form>
+    <input class = "button-primary" type="submit" onclick="showInput()" value="Submit">
+  </div> #}
+    
+  {# <div class="six columns">
+    <h4>Your Labor Info:</h4>
+    <p>Growing Season: <span id='display0'> </span> weeks</p>
+    <p>Labor Hours Per Week: <span id='display1'> </span> hours</p>
+    <p>Season Starts on: <span id='display2'></span></p>
+  </div> #}
 
-  <form>
-    <dl>
-      <h2>Flexability for the crop</h2>
-      <dt>Flexability in weeks:
-      <dd><input type=text name=flexweek>
-      <dt>Flexability in beds:
-      <dd><input type=text name=flexbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+  <div class="six columns">
+    <br>
+    <h4>Your Labor Info:</h4>
+    <table border="1" width="100%">
+      <tr>
+      <th>Season Length in Weeks</th>
+      <th>Labor Hours Per Week</th>
+      <th>Season Starts on:</th>
+      </tr>
+      {% for week in weeks %}
+      <tr>
+      <td>{{ week.weeks }}</td>
+      <td>{{ week.hours }}</td>
+      <td>{{ week.seasonstartdate }}</td>
+      </tr>
+      {% else %}
+      <em>No labor info added yet.</em>
+     {% endfor %}
+    </table>
+    <br>
+  </div>
+  </div>
 
-    <table><h2>Table of flexibilities</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
+  <div class="row">
+  <div class="six columns">
+		<h3>Crop Information</h3>
+		<h4>Add Crops</h4>
+		<form action="{{ url_for('add_crop') }}" method=post class=add-crop>
+			<dl>
+				<dt>Crop Name:
+				<dd><input type=text name=cropname>
+				<dt>Date starting (give week number):
+				<dd><input type=number name=startweek>
+				<dt>Number of Beds:
+				<dd><input type=number name=numbeds>
+    		<dt>Total Number of weeks for crop:
+    		<dd><input id='numweeks' type=number name=numweeks>
+				<dd><input class = "button-primary" type=submit value=Add onchange="createCheckboxes">
+			</dl>
+		</form>
+  </div>
+		
+  <div class="six columns"> 
+		<p></p>
+		<h4>Your Crops</h4>
+    	<br>
+		<table border="1" width="100%">
+			<tr>
+			<th>Crop Name</th>
+			<th>Starting Date</th>
+			<th>Number of beds</th>
+      		<th>Number of Weeks</th>
+			</tr>
+			{% for crop in crops %}
+			<tr>
+			<td>{{ crop.cropname }}</td>
+			<td>{{ crop.startweek }}</td>
+			<td>{{ crop.numbeds}}</td>
+      <td>{{ crop.numweeks}}</td>
+			</tr>
+			{% else %}
+			<em>No crops added yet.</em>
+		 {% endfor %}
+		</table>
+		<br>
+  </div>
+  </div>
 
-    <form>
-    <dl>
-      <h2>Tending processes for the crop</h2>
-      <dt>Add processes:
-      <dd><input type=text name=flexweek>
-      <dt>Weeks for added process:
-      <dd><input type=text name=flexbeds>
-      <dd><input type=submit value=Submit>
-    </dl>
-  </form>
+  <div class="row">
+  <div class="six columns">
+		<h3>Crop Tending Processes</h3>
+    <h4>Select Crop</h4>
+    <form action="{{ url_for('add_process') }}" method=post class=add-process>
 
-    <table>
-    <h2>Table of crops and beds</h2>
-  {% for key, value in crop_dictionary.items() %}
-     <tr>
-          <th> {{ key }} </th>
-          <td> {{ value }} </td>
-     </tr>
-  {% endfor %}
-  </table>
-   
+    <script language="JavaScript">
+
+    function check(index) {
+    var checked =  document.getElementById("checkweek").checked;
+    selectedweeks[index] = checked;
+    }
+
+    </script>
+
+  	<select id="selectcrop">
+  		{% for crop in crops %}
+  		<option value="cropname" name="selected">{{crop.cropname}} - starting week {{crop.startweek}}</option>
+  		{% else %}
+  		<option value="none">None</option>
+  		{% endfor %}
+  	</select>
+  		<h4>Tending processes </h4>
+		<dl>
+			<dt>Add processes:</dt>
+			<dd><input type=text name=process></dd>
+			<dt>Weeks for added process:</dt>
+      <div id="checkbox_div">
+      </div>
+
+      {% for week in weeks %}
+      {% for index in range(1,week.weeks+1) %}
+      <div class="one column">
+      {{index}} <input type="checkbox" name="pweeks" id="checkweek" onselect="check({{index}})">
+      </div>
+      {% endfor %}
+      {% endfor %}
+
+      </p>
+      <br><dt>Hours per week:</dt>
+  		<dd><input type=float name=phours></dd>
+      </p>
+			<dd><input class = "button-primary" type=submit value=Add></dd>
+		</dl>
+    </form>
+  </div>
+
+  <div class="six columns">
+    <p></p>
+    <h4>Your Tending Processes</h4>
+    <table border="1" width="100%">
+      <tr>
+      <th>Crop Name</th>
+      <th>Tending Process</th>
+      <th>Week</th>
+      <th>Hours Per Week</th>
+      </tr>
+      {% for process in processes %} 
+      <tr>
+      <td>{{ process.cropname }}</td>
+      <td>{{ process.process }}</td>
+      <td>{{ process.pweeks }}</td>
+      <td>{{ process.phours }}</td>
+      </tr>
+      {% else %}
+      <em>No processes added yet.</em>
+     {% endfor %}
+    </table>
+    <br>
+  </div>
+  </div>
+  <button onclick="{{ url_for('calculate') }}" method=post class=button-primary>Generate my lists</button><br>
+  <div class="row">
+    <h3>Your Planting Timetable</h3>
+    <table border="1" width="100%">
+      <tr>
+      <th>Crop Name</th>
+      {% for week in weeks %}
+      {% for index in range(1, week.weeks+1) %}
+      <th>{{ index }}</th>
+      {% endfor %}
+      {% endfor %}
+      </tr>
+      {% for crop in crops %}
+      {#{% for week in weeks %}
+      {% for index in range(1,week.weeks+1) %}#}
+      <tr>
+      <td>{{ crop.cropname }}</td>
+      <td>{{ crop.numweeks }}</td>
+      <td>{{ crop.numbeds}}</td>
+      </tr>
+      {% else %}
+      <em>No crops added yet.</em>
+     {#{% endfor %}
+     {% endfor %}#}
+     {% endfor %}
+    </table>
+    <br>
+  </div>
+
+	{% endif %}
+	 
 {% endblock %}
