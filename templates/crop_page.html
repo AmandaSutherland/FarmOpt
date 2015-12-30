@@ -40,7 +40,7 @@
   <div class="six columns">
     <br>
     <h4>Your Labor Info:</h4>
-    <table border="1" width="100%">
+    <table id="labortable" border="1" width="100%">
       <tr>
       <th>Season Length in Weeks</th>
       <th>Labor Hours Per Week</th>
@@ -83,12 +83,13 @@
 		<p></p>
 		<h4>Your Crops</h4>
     	<br>
-		<table border="1" width="100%">
+		<table id="croptable" border="1" width="100%">
 			<tr>
 			<th>Crop Name</th>
 			<th>Starting Date</th>
 			<th>Number of beds</th>
-      		<th>Number of Weeks</th>
+      <th>Number of Weeks</th>
+      <th>Delete this crop?</th>
 			</tr>
 			{% for crop in crops %}
 			<tr>
@@ -96,12 +97,19 @@
 			<td>{{ crop.startweek }}</td>
 			<td>{{ crop.numbeds}}</td>
       <td>{{ crop.numweeks}}</td>
+      <td><input type="button" value="Delete" onclick="deleteRow(this)"></td>
 			</tr>
 			{% else %}
 			<em>No crops added yet.</em>
 		 {% endfor %}
 		</table>
 		<br>
+    <script>
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("croptable").deleteRow(i);
+    }
+    </script>
   </div>
   </div>
 
@@ -155,12 +163,13 @@
   <div class="six columns">
     <p></p>
     <h4>Your Tending Processes</h4>
-    <table border="1" width="100%">
+    <table id="tendingprocesstable" border="1" width="100%">
       <tr>
       <th>Crop Name</th>
       <th>Tending Process</th>
       <th>Week</th>
       <th>Hours Per Week</th>
+      <th>Detete this process?</th>
       </tr>
       {% for process in processes %} 
       <tr>
@@ -168,12 +177,19 @@
       <td>{{ process.process }}</td>
       <td>{{ process.pweeks }}</td>
       <td>{{ process.phours }}</td>
+      <td><input type="button" value="Delete" onclick="deleteRow(this)"></td>
       </tr>
       {% else %}
       <em>No processes added yet.</em>
      {% endfor %}
     </table>
     <br>
+    <script>
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("croptable").deleteRow(i);
+    }
+    </script>
   </div>
   </div>
   <button onclick="{{ url_for('calculate') }}" method=post class=button-primary>Generate my lists</button><br>
