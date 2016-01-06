@@ -116,6 +116,9 @@ def add_weeks():
 	flash('Labor information was successfully registered')
 	return redirect(url_for('crops'))
 
+#^^when you cast the output of a function to be an integer, as you do above
+#you don't have to have the line that says totalweeks = int
+
 @app.route('/addprocess', methods=['POST'])
 def add_process():
 	if not session.get('logged_in'):
@@ -131,7 +134,7 @@ def calculate():
 	user_schedule=[]
 	crop_hours=[]
 	available_hours=[]
-	print 'I am calculating'
+	print 'I am calculating' #your program has personality
 	cur1 = g.db.execute('select cropname, startdate, numbeds, numweeks from crops where username = ?', [session['username']])
 	crops = [dict(cropname=row[0], startdate=row[1], numbeds=row[2], numweeks=row[3]) for row in cur1.fetchall()]
 	cur2 = g.db.execute('select id, hours from weeks where username = ?', [session['username']])
